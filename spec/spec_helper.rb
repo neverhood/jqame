@@ -45,9 +45,8 @@ Spork.each_run do
   FactoryGirl.reload
   DatabaseCleaner.clean
 
-  Dir["#{Rails.root}/app/models/**/*.rb"].each do |model|
-    load model
-  end
+  Dir["#{ENGINE_RAILS_ROOT}/app/models/**/*.rb"].each { |model| load model }
+  Dir["#{Rails.root}/app/models/**/*.rb"].each { |model| load model }
 end
 
 

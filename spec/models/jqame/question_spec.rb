@@ -10,4 +10,8 @@ describe Jqame::Question do
     it { should validate_presence_of(:body) }
   end
 
+  describe 'Associations' do
+    it { should have_many(:answers) }
+  end
+
 end
