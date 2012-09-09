@@ -14,3 +14,8 @@ gem "jquery-rails"
 # your gem to rubygems.org.
 
 gem "pry"
+
+group :assets do
+  gem 'bootstrap-sass'
+  gem 'font-awesome-sass-rails'
+end
