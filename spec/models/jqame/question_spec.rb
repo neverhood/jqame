@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe Jqame::Question do
-  it { should validate_presence_of(:body) }
-  it { should validate_presence_of(:title) }
+
+  describe 'Validations' do
+    subject { FactoryGirl.build(:question) }
+
+    it { should validate_uniqueness_of(:title) }
+    it { should validate_presence_of(:title) }
+    it { should validate_presence_of(:body) }
+  end
+
 end

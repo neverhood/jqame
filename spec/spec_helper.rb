@@ -14,6 +14,7 @@ Spork.prefork do
   require 'rspec/rails'
   require 'rspec/autorun'
   require 'shoulda/matchers/integrations/rspec'
+  require 'database_cleaner'
 
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
@@ -24,6 +25,8 @@ Spork.prefork do
     config.filter_run :focus => true
     config.run_all_when_everything_filtered = true
     config.use_transactional_fixtures = true
+
+    DatabaseCleaner.strategy = :truncation
 
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of
@@ -39,9 +42,12 @@ Spork.prefork do
 end
 
 Spork.each_run do
-  #FactoryGirl.reload
-  # This code will be run each time you run your specs.
+  FactoryGirl.reload
+  DatabaseCleaner.clean
 
+  Dir["#{Rails.root}/app/models/**/*.rb"].each do |model|
+    load model
+  end
 end
 
 
