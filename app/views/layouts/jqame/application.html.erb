@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Jqame</title>
-        <meta name="robots" content="noindex">
-        <%= stylesheet_link_tag    "jqame/application", :media => "all" %>
-        <%= javascript_include_tag "jqame/application" %>
-        <%= csrf_meta_tags %>
-    </head>
+  <head>
+    <title>Jqame</title>
+    <meta name="robots" content="noindex">
+    <%= stylesheet_link_tag    "jqame/application", :media => "all" %>
+    <%= javascript_include_tag "jqame/application" %>
+    <%= csrf_meta_tags %>
+  </head>
 
-    <body id='<%= controller_name %>' data-action='<%= action_name %>'>
+  <body id='<%= controller_name %>' data-action='<%= action_name %>'>
     <div class='container'>
-        <div class='row'>
-            <%= yield %>
-        </div>
+      <div class='row'>
+        <%= yield %>
+      </div>
     </div>
-    </body>
+  </body>
 </html>

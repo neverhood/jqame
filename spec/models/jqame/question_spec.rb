@@ -14,4 +14,14 @@ describe Jqame::Question do
     it { should have_many(:answers) }
   end
 
+  describe 'Methods' do
+    describe '#answer_with' do
+      it 'should save and return an answer if valid params were given' do
+      end
+
+      it 'should return an answer with #errors if invalid params were given' do
+      end
+    end
+  end
+
 end
