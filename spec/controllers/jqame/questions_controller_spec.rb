@@ -5,7 +5,7 @@ describe Jqame::QuestionsController do
   describe '#find_question! before filter' do
     describe 'Given a valid question id' do
       before do
-        @question = FactoryGirl.create(:question)
+        @question = FactoryGirl.create(:jqame_question)
         get :show, { id: @question.id, use_route: 'jqame' }
       end
 

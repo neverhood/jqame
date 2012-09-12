@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Jqame::Question do
 
   describe 'Validations' do
-    subject { FactoryGirl.build(:question) }
+    subject { FactoryGirl.build(:jqame_question) }
 
     it { should validate_uniqueness_of(:title) }
     it { should validate_presence_of(:title) }
@@ -17,8 +17,8 @@ describe Jqame::Question do
   describe 'Methods' do
     describe '#answer_with' do
       before do
-        @question = FactoryGirl.build(:question)
-        @answer = FactoryGirl.build(:answer, question: @question)
+        @question = FactoryGirl.build(:jqame_question)
+        @answer = FactoryGirl.build(:jqame_answer, question: @question)
       end
 
       it 'should save and return an answer if valid params were given' do
