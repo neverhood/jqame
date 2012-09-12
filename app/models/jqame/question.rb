@@ -6,6 +6,7 @@ module Jqame
     validates :title, uniqueness: { case_sensitive: false }
 
     has_many :answers, :dependent => :destroy
+    has_many :votes, :dependent => :destroy, :as => :votable
 
     # builds and attempts to save an answer
     def answer_with options

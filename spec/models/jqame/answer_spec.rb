@@ -8,6 +8,7 @@ describe Jqame::Answer do
 
   describe 'Associations' do
     it { should belong_to(:question) }
+    it { should have_many(:votes) }
   end
 
 end

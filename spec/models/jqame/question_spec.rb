@@ -12,6 +12,7 @@ describe Jqame::Question do
 
   describe 'Associations' do
     it { should have_many(:answers) }
+    it { should have_many(:votes) }
   end
 
   describe 'Methods' do
