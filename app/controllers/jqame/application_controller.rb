@@ -23,7 +23,7 @@ module Jqame
     private
 
     def _find_record! model
-      model_name = model.model_name.underscore
+      model_name = model.model_name.sub(/.*::/, '').underscore
       record = model.where(id: params[:id] || params[:"#{model_name}_id"]).first
 
       if record.nil?

@@ -20,11 +20,5 @@ module Jqame
     def edit
     end
 
-    private
-    def find_answer!
-      @answer = Anwer.where(id: params[:id]).first
-      render_not_found if @answer.nil?
-    end
-
   end
 end

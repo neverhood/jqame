@@ -32,11 +32,5 @@ module Jqame
     def destroy
     end
 
-    private
-    def find_question!
-      @question = Question.where(id: params[:id]).first
-      render_not_found if @question.nil?
-    end
-
   end
 end
