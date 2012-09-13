@@ -1,7 +1,6 @@
 #! /bin/bash
 
 cd 'spec/dummy'
-rm 'db/migrate/*' -r
 
 rake 'jqame:install:migrations'
 
