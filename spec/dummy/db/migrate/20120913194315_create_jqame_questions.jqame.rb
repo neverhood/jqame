@@ -8,5 +8,7 @@ class CreateJqameQuestions < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :jqame_questions, :title, unique: true
   end
 end

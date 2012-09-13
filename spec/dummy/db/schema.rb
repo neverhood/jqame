@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120912154725) do
+ActiveRecord::Schema.define(:version => 20120913195525) do
 
   create_table "employees", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -49,8 +49,10 @@ ActiveRecord::Schema.define(:version => 20120912154725) do
     t.datetime "updated_at",                                 :null => false
   end
 
+  add_index "jqame_questions", ["title"], :name => "index_jqame_questions_on_title", :unique => true
+
   create_table "jqame_votes", :force => true do |t|
-    t.integer  "employee_id",                    :null => false
+    t.integer  "employee_id"
     t.boolean  "upvote",       :default => true
     t.integer  "votable_id"
     t.string   "votable_type"
