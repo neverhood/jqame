@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :jqame_answer, :class => 'Jqame::Answer' do
-    association :question
+    association :question, :factory => :jqame_question
 
     body "Answer"
     full true
