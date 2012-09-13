@@ -17,6 +17,13 @@ describe Jqame::Vote do
   end
 
   describe 'Methods' do
+    let(:downvote) { FactoryGirl.create(:jqame_downvote) }
+    let(:vote) { FactoryGirl.create(:jqame_vote) }
+
+    it 'verifies that #downvote? works as expected' do
+      downvote.should be_downvote
+      vote.should_not be_downvote
+    end
   end
 
 end
