@@ -15,6 +15,7 @@ describe 'Suffrage' do
     it { should have_many(:votes) }
 
     describe 'Methods' do
+
       describe 'Not votable owner ( not an author of votable )' do
         it { should_not be_votable_author(question) }
 
@@ -29,6 +30,12 @@ describe 'Suffrage' do
           it 'has voted on question' do
             @employee.voted_on?(question).should be_true
           end
+          it 'cancels upvote upon downvote' do
+            @employee.vote_against! question
+            @employee.voted_for?(question).should be_false
+            @employee.voted_against?(question).should be_true
+            @employee.votes.on(question).count.should == 1
+          end
         end
 
         context 'With existing downvote' do
@@ -41,6 +48,12 @@ describe 'Suffrage' do
           end
           it 'has voted on question' do
             @employee.voted_on?(question).should be_true
+          end
+          it 'cancels downvote upon upvote' do
+            @employee.vote_for! question
+            @employee.voted_for?(question).should be_true
+            @employee.voted_against?(question).should be_false
+            @employee.votes.on(question).count.should == 1
           end
         end
 

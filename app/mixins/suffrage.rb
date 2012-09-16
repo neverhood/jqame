@@ -8,15 +8,19 @@ module Suffrage
     votes.new(votable: votable)
   end
 
-  def vote_for! votable
-    vote_for(votable).tap { |vote| vote.save }
-  end
-
   def vote_against votable
     votes.new(votable: votable, upvote: false)
   end
 
+  def vote_for! votable
+    cancel_vote_for(votable) if voted_against?(votable)
+
+    vote_for(votable).tap { |vote| vote.save }
+  end
+
   def vote_against! votable
+    cancel_vote_for(votable) if voted_for?(votable)
+
     vote_against(votable).tap { |vote| vote.save }
   end
 
@@ -42,6 +46,10 @@ module Suffrage
 
   def voted_against? votable
     votes.on(votable).where(upvote: false).any?
+  end
+
+  def cancel_vote_for votable
+    votes.on(votable).destroy_all
   end
 
   module ClassMethods
