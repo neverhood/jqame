@@ -56,9 +56,9 @@ module Suffrage
   end
 
   def self.included(base)
-    base.has_many :questions, class_name: 'Jqame::Question'
-    base.has_many :answers, class_name: 'Jqame::Answer'
-    base.has_many :votes, class_name: 'Jqame::Vote'
+    base.has_many :questions, class_name: 'Jqame::Question', dependent: :destroy
+    base.has_many :answers, class_name: 'Jqame::Answer', dependent: :destroy
+    base.has_many :votes, class_name: 'Jqame::Vote', dependent: :destroy
   end
 
 end

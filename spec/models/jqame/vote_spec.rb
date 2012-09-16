@@ -10,8 +10,8 @@ describe Jqame::Vote do
     it { should belong_to :employee }
 
     describe 'Votable' do
-      specify { vote.votable.should be_kind_of(Jqame::Question) }
-      specify { answer_vote.votable.should be_kind_of(Jqame::Answer) }
+      specify { vote.votable.should be_an_instance_of(Jqame::Question) }
+      specify { answer_vote.votable.should be_an_instance_of(Jqame::Answer) }
     end
   end
 
@@ -41,6 +41,27 @@ describe Jqame::Vote do
 
         employee.votes.on(vote.votable).should include(vote)
       end
+    end
+  end
+
+  describe 'Callbacks' do
+    it 'updates current_rating of #votable upon vote' do
+      employee = FactoryGirl.create(:employee)
+      question = FactoryGirl.create(:jqame_question)
+      question.current_rating.should be_zero
+
+      employee.vote_for! question
+      question.reload.current_rating.should == 1
+
+      employee.vote_against! question
+      question.reload.current_rating.should == -1
+
+      employee_b = FactoryGirl.create(:employee)
+      employee_b.vote_for! question
+      question.reload.current_rating.should be_zero
+
+      employee_b.vote_against! question
+      question.reload.current_rating.should == -2
     end
   end
 
