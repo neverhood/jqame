@@ -10,6 +10,10 @@ Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../dummy/config/environment", __FILE__)
 
+  Dir["#{ENGINE_RAILS_ROOT}/spec/matchers/jqame/**/*.rb"].each do |matchers_module|
+    require matchers_module
+  end
+
   require 'factory_girl'
   require 'rspec/rails'
   require 'rspec/autorun'
@@ -25,6 +29,11 @@ Spork.prefork do
     config.filter_run :focus => true
     config.run_all_when_everything_filtered = true
     config.use_transactional_fixtures = true
+
+    # include matchers modules
+    [ SuffrageMatchers ].each do |matchers_module|
+      config.include(matchers_module)
+    end
 
     DatabaseCleaner.strategy = :truncation
 

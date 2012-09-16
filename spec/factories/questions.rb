@@ -4,6 +4,8 @@ FactoryGirl.define do
   end
 
   factory :jqame_question, class: 'Jqame::Question' do
+    association :employee
+
     title
     body  'What`s the meaning of life?'
   end

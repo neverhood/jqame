@@ -10,6 +10,7 @@ module Jqame
     attr_accessible :body, :full
 
     belongs_to :question
+    belongs_to :employee
     has_many   :votes, :dependent => :destroy, :as => :votable
 
     validates :body, length: { within: (1..@max_answer_length) }, if: 'answer?'

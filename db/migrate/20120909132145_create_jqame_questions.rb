@@ -4,6 +4,7 @@ class CreateJqameQuestions < ActiveRecord::Migration
       t.string :title
       t.text :body
       t.integer :current_rating, default: 0, limit: 2
+      t.integer :employee_id
 
       t.timestamps
     end

@@ -3,6 +3,7 @@
 FactoryGirl.define do
   factory :jqame_answer, class: 'Jqame::Answer' do
     association :question, :factory => :jqame_question
+    association :employee
 
     body "Answer"
     full true
@@ -10,6 +11,7 @@ FactoryGirl.define do
 
   factory :jqame_comment, class: 'Jqame::Answer' do
     association :question, :factory => :jqame_question
+    association :employee
 
     body "Comment"
     full false
