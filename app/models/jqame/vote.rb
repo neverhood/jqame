@@ -1,5 +1,11 @@
 module Jqame
   class Vote < ActiveRecord::Base
+    class << self
+      attr_accessor :rates
+    end
+
+    # Amount of reputation to be granted/withdrawn for an employee upon upvote/downvote of his question or answer
+    @rates = { question: 10, answer: 5 }
 
     # Associations
     belongs_to :votable, polymorphic: true
