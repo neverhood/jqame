@@ -44,12 +44,13 @@ module Suffrage
     votes.on(votable).where(upvote: false).any?
   end
 
+  module ClassMethods
+  end
+
   def self.included(base)
     base.has_many :questions, class_name: 'Jqame::Question'
     base.has_many :answers, class_name: 'Jqame::Answer'
     base.has_many :votes, class_name: 'Jqame::Vote'
   end
 
-  module ClassMethods
-  end
 end

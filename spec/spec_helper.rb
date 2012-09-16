@@ -30,7 +30,7 @@ Spork.prefork do
     config.run_all_when_everything_filtered = true
     config.use_transactional_fixtures = true
 
-    # include matchers modules
+    # include matchers modules, should be explicitly set up
     [ SuffrageMatchers ].each do |matchers_module|
       config.include(matchers_module)
     end
