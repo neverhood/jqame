@@ -45,23 +45,44 @@ describe Jqame::Vote do
   end
 
   describe 'Callbacks' do
+    before do
+      @employee = FactoryGirl.create(:employee)
+      @question = FactoryGirl.create(:jqame_question)
+    end
+
     it 'updates current_rating of #votable upon vote' do
-      employee = FactoryGirl.create(:employee)
-      question = FactoryGirl.create(:jqame_question)
-      question.current_rating.should be_zero
+      @question.current_rating.should be_zero
 
-      employee.vote_for! question
-      question.reload.current_rating.should == 1
+      @employee.vote_for! @question
+      @question.reload.current_rating.should == 1
 
-      employee.vote_against! question
-      question.reload.current_rating.should == -1
+      @employee.vote_against! @question
+      @question.reload.current_rating.should == -1
 
       employee_b = FactoryGirl.create(:employee)
-      employee_b.vote_for! question
-      question.reload.current_rating.should be_zero
+      employee_b.vote_for! @question
+      @question.reload.current_rating.should be_zero
 
-      employee_b.vote_against! question
-      question.reload.current_rating.should == -2
+      employee_b.vote_against! @question
+      @question.reload.current_rating.should == -2
+    end
+
+    it 'updated votable`s owner reputation upon vote' do
+      author = @question.employee
+      author.reputation.should be_zero
+
+      @employee.vote_for! @question
+      author.reload.reputation.should == Jqame::Vote.rates[:question][:upvote]
+
+      @employee.vote_against! @question
+      author.reload.reputation.should == Jqame::Vote.rates[:question][:downvote]
+
+      employee_b = FactoryGirl.create(:employee)
+      employee_b.vote_for! @question
+      author.reload.reputation.should == ( Jqame::Vote.rates[:question][:downvote] + Jqame::Vote.rates[:question][:upvote] )
+
+      employee_b.vote_against! @question
+      author.reload.reputation.should == ( Jqame::Vote.rates[:question][:downvote] * 2 )
     end
   end
 

@@ -1,11 +1,12 @@
 module Jqame
   class Answer < ActiveRecord::Base
     class << self
-      attr_accessor :max_answer_length, :max_comment_length
+      attr_accessor :max_answer_length, :max_comment_length, :votable_type
     end
 
     @max_answer_length  = 10000
     @max_comment_length = 200
+    @votable_type       = :answer
 
     attr_accessible :body, :full
 

@@ -1,5 +1,11 @@
 module Jqame
   class Question < ActiveRecord::Base
+
+    class << self
+      attr_accessor :votable_type
+    end
+    @votable_type = :question
+
     attr_accessible :body, :title
 
     validates :body, :title, presence: true

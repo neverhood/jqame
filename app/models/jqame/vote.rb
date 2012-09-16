@@ -5,7 +5,10 @@ module Jqame
     end
 
     # Amount of reputation to be granted/withdrawn for an employee upon upvote/downvote of his question or answer
-    @rates = { question: 10, answer: 5 }
+    @rates = {
+      question: { upvote: 10, downvote: -5 },
+      answer:   { upvote:  5, downvote: -3 }
+    }
 
     # Associations
     belongs_to :votable, polymorphic: true
@@ -20,8 +23,12 @@ module Jqame
     validates :employee_id, uniqueness: { scope: [ :votable_id, :votable_type, :upvote ] }
 
     # Callbacks
-    before_save    :update_votable_rating_after_create
-    before_destroy :update_votable_rating_after_destroy
+    # Votable
+    before_create  :update_votable_rating_before_create
+    before_destroy :update_votable_rating_before_destroy
+    # Employee
+    before_create  :update_employee_reputation_before_create
+    before_destroy :update_employee_reputation_before_destroy
 
     def votable= votable
       tap do |vote|
@@ -34,14 +41,30 @@ module Jqame
       not upvote?
     end
 
+    def kind
+      upvote?? :upvote : :downvote
+    end
+
     private
 
-    def update_votable_rating_after_create
+    def update_votable_rating_before_create
       votable.increment!(:current_rating, ( upvote?? 1 : -1 ))
     end
 
-    def update_votable_rating_after_destroy
+    def update_votable_rating_before_destroy
       votable.increment!(:current_rating, ( upvote?? -1 : 1 ))
+    end
+
+    def update_employee_reputation_before_create
+      modifier = Vote.rates[votable.class.votable_type][kind]
+
+      votable.employee.increment!(:reputation, modifier)
+    end
+
+    def update_employee_reputation_before_destroy
+      modifier = Vote.rates[votable.class.votable_type][kind]
+
+      votable.employee.increment!(:reputation, - modifier)
     end
 
   end
