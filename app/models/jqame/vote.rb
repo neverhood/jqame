@@ -6,9 +6,20 @@ module Jqame
 
     # Amount of reputation to be granted/withdrawn for an employee upon upvote/downvote of his question or answer
     @rates = {
-      question: { upvote: 10, downvote: -5 },
-      answer:   { upvote:  5, downvote: -3 }
+      question: { upvote: 5 , downvote: -3 },
+      answer:   { upvote: 10, downvote: -5 }
     }
+
+    def self.affecting_votables_of employee, records_limit = 5
+      votes, questions, answers = [ Jqame::Vote, Jqame::Question, Jqame::Answer ].map(&:arel_table)
+
+      find_by_sql( votes.project(votes[Arel.star]).
+        join(questions, Arel::Nodes::OuterJoin).on(outer_join_votable_predicates(questions)).
+        join(answers, Arel::Nodes::OuterJoin).on(outer_join_votable_predicates(answers)).
+          where(questions[:employee_id].eq(employee.id).or(answers[:employee_id].eq(employee.id))).
+        order(votes[:created_at].desc).
+        take(records_limit).to_sql )
+    end
 
     # Associations
     belongs_to :votable, polymorphic: true
@@ -17,7 +28,8 @@ module Jqame
     attr_accessible :votable, :upvote
 
     # Scopes
-    scope :on, -> votable { where(votable_id: votable.id, votable_type: votable.class.model_name) }
+    scope :on,     -> votable { where(votable_id: votable.id, votable_type: votable.class.model_name) }
+    scope :recent, -> count = 5 { limit(count).order('jqame_votes.created_at DESC') }
 
     # Validations
     validates :employee_id, uniqueness: { scope: [ :votable_id, :votable_type, :upvote ] }
@@ -65,6 +77,11 @@ module Jqame
       modifier = Vote.rates[votable.class.votable_type][kind]
 
       votable.employee.increment!(:reputation, - modifier)
+    end
+
+    def self.outer_join_votable_predicates(votables)
+      arel_table[:votable_id].eq(votables[:id]).
+        and(arel_table[:votable_type].eq(votables.engine.to_s))
     end
 
   end

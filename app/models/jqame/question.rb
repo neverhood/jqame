@@ -21,5 +21,6 @@ module Jqame
     def answer_with options
       answers.new(options).tap { |answer| answer.save }
     end
+
   end
 end

@@ -26,10 +26,24 @@ describe Jqame::Vote do
 
     it 'verifies that #votable attribute is available for mass-assigment because of defined #votable=' do
       votable = vote.votable
-      vote = Jqame::Vote.new(votable: votable)
+      vote = described_class.new(votable: votable)
 
       vote.votable_id.should == votable.id
       vote.votable_type.should == votable.class.model_name
+    end
+
+    describe 'Class methods' do
+      it 'verifies that #affecting_votables_of works as expected' do
+        employee = FactoryGirl.create(:employee)
+        other_employee = FactoryGirl.create(:employee)
+        employee_votables = [ FactoryGirl.create(:jqame_question, employee: employee), FactoryGirl.create(:jqame_answer, employee: employee) ]
+        random_votables = [ FactoryGirl.create(:jqame_question), FactoryGirl.create(:jqame_answer) ]
+
+        votes = employee_votables.map { |votable| other_employee.vote_for! votable }
+        random_votables.each          { |votable| other_employee.vote_for! votable }
+
+        described_class.affecting_votables_of(employee).sort.should == votes.sort
+      end
     end
   end
 
@@ -72,17 +86,17 @@ describe Jqame::Vote do
       author.reputation.should be_zero
 
       @employee.vote_for! @question
-      author.reload.reputation.should == Jqame::Vote.rates[:question][:upvote]
+      author.reload.reputation.should == described_class.rates[:question][:upvote]
 
       @employee.vote_against! @question
-      author.reload.reputation.should == Jqame::Vote.rates[:question][:downvote]
+      author.reload.reputation.should == described_class.rates[:question][:downvote]
 
       employee_b = FactoryGirl.create(:employee)
       employee_b.vote_for! @question
-      author.reload.reputation.should == ( Jqame::Vote.rates[:question][:downvote] + Jqame::Vote.rates[:question][:upvote] )
+      author.reload.reputation.should == ( described_class.rates[:question][:downvote] + described_class.rates[:question][:upvote] )
 
       employee_b.vote_against! @question
-      author.reload.reputation.should == ( Jqame::Vote.rates[:question][:downvote] * 2 )
+      author.reload.reputation.should == ( described_class.rates[:question][:downvote] * 2 )
     end
   end
 
