@@ -15,6 +15,8 @@ module Jqame
     has_many :answers, :dependent => :destroy
     has_many :votes, :dependent => :destroy, :as => :votable
 
+    scope :top, -> count = 5 { limit(count).order('jqame_questions.current_rating DESC') }
+
     # builds and attempts to save an answer
     def answer_with options
       answers.new(options).tap { |answer| answer.save }

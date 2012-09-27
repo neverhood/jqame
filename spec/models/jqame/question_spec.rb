@@ -33,4 +33,17 @@ describe Jqame::Question do
     end
   end
 
+  describe 'Scopes' do
+    describe '#top' do
+      before do
+        @questions = [ FactoryGirl.create(:jqame_question), FactoryGirl.create(:jqame_question, current_rating: 10),
+                       FactoryGirl.create(:jqame_question, current_rating: 20) ]
+      end
+
+      it 'returns questions ordered by #current_rating' do
+        described_class.top.should == @questions.reverse
+      end
+    end
+  end
+
 end

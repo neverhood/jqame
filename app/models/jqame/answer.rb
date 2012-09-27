@@ -17,6 +17,8 @@ module Jqame
     validates :body, length: { within: (1..@max_answer_length) }, if: 'answer?'
     validates :body, length: { within: (1..@max_comment_length) }, if: 'comment?'
 
+    scope :top, -> count = 5 { limit(count).order('jqame_answers.current_rating DESC') }
+
     def comment?
       not full?
     end
