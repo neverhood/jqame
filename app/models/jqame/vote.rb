@@ -10,6 +10,7 @@ module Jqame
       answer:   { upvote: 10, downvote: -5 }
     }
 
+    # Returns a collection of votes that affected #employee reputation
     def self.affecting_votables_of employee, records_limit = 5
       votes, questions, answers = [ Jqame::Vote, Jqame::Question, Jqame::Answer ].map(&:arel_table)
 
@@ -55,6 +56,10 @@ module Jqame
 
     def kind
       upvote?? :upvote : :downvote
+    end
+
+    def reputation_value
+      self.class.rates[ votable_type.sub('Jqame::', '').underscore.to_sym ][ kind ]
     end
 
     private

@@ -32,6 +32,11 @@ describe Jqame::Vote do
       vote.votable_type.should == votable.class.model_name
     end
 
+    it 'verifies that #reputation_value returns an expected value' do
+      downvote.reputation_value.should == described_class.rates[:question][:downvote]
+      vote.reputation_value.should     == described_class.rates[:question][:upvote]
+    end
+
     describe 'Class methods' do
       it 'verifies that #affecting_votables_of works as expected' do
         employee = FactoryGirl.create(:employee)
