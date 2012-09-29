@@ -1,14 +1,14 @@
 describe 'Suffrage' do
 
   before do
-    @employee = FactoryGirl.create(:employee)
+    @elector = FactoryGirl.create(:elector)
   end
 
   let(:question) { FactoryGirl.create(:jqame_question) }
   let(:answer)   { FactoryGirl.create(:jqame_answer, question: question) }
 
-  describe 'Employee' do
-    subject { @employee }
+  describe 'elector' do
+    subject { @elector }
 
     it { should have_many(:questions) }
     it { should have_many(:answers) }
@@ -20,46 +20,46 @@ describe 'Suffrage' do
         it { should_not be_votable_author(question) }
 
         context 'With existing upvote' do
-          before { @employee.vote_for! question }
+          before { @elector.vote_for! question }
 
           it { should be_able_to_vote_against(question) }
           it { should_not be_able_to_vote_for(question) }
           it 'has voted for question' do
-            @employee.voted_for?(question).should be_true
+            @elector.voted_for?(question).should be_true
           end
           it 'has voted on question' do
-            @employee.voted_on?(question).should be_true
+            @elector.voted_on?(question).should be_true
           end
           it 'cancels upvote upon downvote' do
-            @employee.vote_against! question
-            @employee.voted_for?(question).should be_false
-            @employee.voted_against?(question).should be_true
-            @employee.votes.on(question).count.should == 1
+            @elector.vote_against! question
+            @elector.voted_for?(question).should be_false
+            @elector.voted_against?(question).should be_true
+            @elector.votes.on(question).count.should == 1
           end
         end
 
         context 'With existing downvote' do
-          before { @employee.vote_against! question }
+          before { @elector.vote_against! question }
 
           it { should be_able_to_vote_for(question) }
           it { should_not be_able_to_vote_against(question) }
           it 'has voted against question' do
-            @employee.voted_against?(question).should be_true
+            @elector.voted_against?(question).should be_true
           end
           it 'has voted on question' do
-            @employee.voted_on?(question).should be_true
+            @elector.voted_on?(question).should be_true
           end
           it 'cancels downvote upon upvote' do
-            @employee.vote_for! question
-            @employee.voted_for?(question).should be_true
-            @employee.voted_against?(question).should be_false
-            @employee.votes.on(question).count.should == 1
+            @elector.vote_for! question
+            @elector.voted_for?(question).should be_true
+            @elector.voted_against?(question).should be_false
+            @elector.votes.on(question).count.should == 1
           end
         end
 
         context 'Wihout existing vote' do
           it 'has not voted on question' do
-            @employee.voted_on?(question).should be_false
+            @elector.voted_on?(question).should be_false
           end
           it { should be_able_to_vote_for(question) }
           it { should be_able_to_vote_against(question) }
@@ -67,7 +67,7 @@ describe 'Suffrage' do
       end
 
       describe 'Votable owner' do
-        subject { question.employee }
+        subject { question.elector }
 
         it { should be_votable_author(question) }
         it { should_not be_able_to_vote_for(question) }

@@ -5,7 +5,7 @@ class CreateJqameAnswers < ActiveRecord::Migration
       t.text :body
       t.integer :current_rating, default: 0, limit: 2
       t.integer :question_id
-      t.integer :employee_id
+      t.integer :elector_id
 
       t.timestamps
     end

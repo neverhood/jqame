@@ -3,7 +3,7 @@ module Jqame
     attr_accessible :body, :votable
 
     belongs_to :votable, polymorphic: true
-    belongs_to :employee
+    belongs_to :elector, class_name: Jqame.elector_class
 
     validates :body, length: { within: (1..1000) }
 

@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :jqame_answer, class: 'Jqame::Answer' do
     association :question, :factory => :jqame_question
-    association :employee
+    association :elector
 
     body "Answer"
   end

@@ -2,10 +2,10 @@
 
 FactoryGirl.define do
   sequence :email do |n|
-    "employee-#{n}@jobsite.com"
+    "elector-#{n}@jobsite.com"
   end
 
-  factory :employee, :class => 'Employee' do
+  factory :elector, class: Jqame.elector_class do
     email
     password              '123456'
     password_confirmation '123456'

@@ -7,7 +7,7 @@ describe Jqame::Comment do
     let(:answer_comment) { FactoryGirl.create(:jqame_comment_on_answer) }
 
     it { should belong_to :votable }
-    it { should belong_to :employee }
+    it { should belong_to :elector }
 
     describe 'Votable' do
       specify { comment.votable.should be_an_instance_of(Jqame::Question) }

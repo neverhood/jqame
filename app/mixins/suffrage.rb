@@ -1,5 +1,5 @@
 module Suffrage
-  # A simple set of methods for external application's `employee` model
+  # A simple set of methods for external application's `elector` model
   # Mounting application should include this module explicitly
   #
   extend self
@@ -37,7 +37,7 @@ module Suffrage
   end
 
   def votable_author? votable
-    votable.employee_id == id
+    votable.elector_id == id
   end
 
   def voted_for? votable
@@ -62,9 +62,9 @@ module Suffrage
   end
 
   def self.included(base)
-    base.has_many :questions, class_name: 'Jqame::Question', dependent: :destroy
-    base.has_many :answers, class_name: 'Jqame::Answer', dependent: :destroy
-    base.has_many :votes, class_name: 'Jqame::Vote', dependent: :destroy
+    base.has_many :questions, class_name: 'Jqame::Question', foreign_key: 'elector_id', dependent: :destroy
+    base.has_many :answers, class_name: 'Jqame::Answer', foreign_key: 'elector_id', dependent: :destroy
+    base.has_many :votes, class_name: 'Jqame::Vote', foreign_key: 'elector_id', dependent: :destroy
   end
 
 end

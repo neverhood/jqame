@@ -6,7 +6,7 @@ module Jqame
     attr_accessible :body, :full
 
     belongs_to :question
-    belongs_to :employee
+    belongs_to :elector, class_name: Jqame.elector_class
 
     validates :body, length: { within: (1..50000) }
 
