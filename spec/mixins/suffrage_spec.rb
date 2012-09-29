@@ -72,7 +72,18 @@ describe 'Suffrage' do
         it { should be_votable_author(question) }
         it { should_not be_able_to_vote_for(question) }
         it { should_not be_able_to_vote_against(question) }
+
+        it 'verifies that #dates_when_reputation_changed returns an expected dates' do
+          expected_dates = (1..5).map { |num| num.days.ago }
+          expected_dates.each do |date|
+            vote = FactoryGirl.create(:jqame_vote, votable: question)
+            vote.update_attribute(:created_at, date)
+          end
+
+          subject.dates_when_reputation_changed.sort.should == expected_dates.map(&:to_date).sort
+        end
       end
+
     end
   end
 

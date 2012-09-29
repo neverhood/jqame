@@ -52,6 +52,12 @@ module Suffrage
     votes.on(votable).destroy_all
   end
 
+  def dates_when_reputation_changed limit = 25
+    date_predicate = "DATE('jqame_votes'.'created_at')"
+    Jqame::Vote.affecting_votables_of(self).group(date_predicate).limit(limit).
+      select(date_predicate + " AS date").map { |record| Date.parse(record.date) }
+  end
+
   module ClassMethods
   end
 
