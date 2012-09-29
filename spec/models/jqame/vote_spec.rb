@@ -71,7 +71,7 @@ describe Jqame::Vote do
         employees.each { |employee| expected_votes << employee.vote_for!(question) }
 
         expected_votes.pop.update_attribute(:created_at, Date.yesterday)
-        described_class.affecting_votables_by_date(@employee, Date.today).sort.should == expected_votes.sort
+        described_class.affecting_votables_by_date(@employee, Time.now.utc.to_date).sort.should == expected_votes.sort
       end
     end
   end

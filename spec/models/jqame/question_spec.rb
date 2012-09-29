@@ -13,6 +13,7 @@ describe Jqame::Question do
   describe 'Associations' do
     it { should have_many(:answers) }
     it { should have_many(:votes) }
+    it { should have_many(:comments) }
   end
 
   describe 'Methods' do
@@ -29,6 +30,22 @@ describe Jqame::Question do
 
       it 'should return an answer with #errors if invalid params were given' do
         @question.answer_with(body: '').errors.should_not be_empty
+      end
+    end
+
+    describe '#comment_with' do
+      before do
+        @question = FactoryGirl.build(:jqame_question)
+        @comment = FactoryGirl.build(:jqame_comment, votable: @question)
+      end
+
+      it 'should save and return an answer if valid params were given' do
+        @question.comment_with(body: @comment.body).should(be_persisted)
+        @question.comments.count.should == 1
+      end
+
+      it 'should return an answer with #errors if invalid params were given' do
+        @question.comment_with(body: '').errors.should_not be_empty
       end
     end
   end

@@ -6,14 +6,5 @@ FactoryGirl.define do
     association :employee
 
     body "Answer"
-    full true
-  end
-
-  factory :jqame_comment, class: 'Jqame::Answer' do
-    association :question, :factory => :jqame_question
-    association :employee
-
-    body "Comment"
-    full false
   end
 end

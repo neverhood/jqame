@@ -1,31 +1,15 @@
 module Jqame
   class Answer < ActiveRecord::Base
-    class << self
-      attr_accessor :max_answer_length, :max_comment_length, :votable_type
-    end
+    include Jqame::Votable
 
-    @max_answer_length  = 10000
-    @max_comment_length = 200
     @votable_type       = :answer
-
     attr_accessible :body, :full
 
     belongs_to :question
     belongs_to :employee
-    has_many   :votes, :dependent => :destroy, :as => :votable
 
-    validates :body, length: { within: (1..@max_answer_length) }, if: 'answer?'
-    validates :body, length: { within: (1..@max_comment_length) }, if: 'comment?'
+    validates :body, length: { within: (1..50000) }
 
     scope :top, -> count = 5 { limit(count).order('jqame_answers.current_rating DESC') }
-
-    def comment?
-      not full?
-    end
-
-    def answer?
-      full?
-    end
-
   end
 end

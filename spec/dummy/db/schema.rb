@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120916112224) do
+ActiveRecord::Schema.define(:version => 20120929211742) do
 
   create_table "employees", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -35,12 +35,20 @@ ActiveRecord::Schema.define(:version => 20120916112224) do
 
   create_table "jqame_answers", :force => true do |t|
     t.text     "body"
-    t.boolean  "full",                        :default => true
     t.integer  "current_rating", :limit => 2, :default => 0
     t.integer  "question_id"
     t.integer  "employee_id"
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+  end
+
+  create_table "jqame_comments", :force => true do |t|
+    t.integer  "employee_id"
+    t.text     "body",         :limit => 1000
+    t.integer  "votable_id"
+    t.string   "votable_type"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   create_table "jqame_questions", :force => true do |t|
