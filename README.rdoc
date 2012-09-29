@@ -4,9 +4,9 @@ This project rocks and uses MIT-LICENSE.
 
 = Configuration
 
-Set the Jqame.elector_class in your application
-example:
+**Set the Jqame.elector_class in your application**
+*example:*
 
-lib/initializers/jqame.rb:
+`lib/initializers/jqame.rb:`
 
-Jqame.elector_class = 'User'
+`Jqame.elector_class = 'User'`
