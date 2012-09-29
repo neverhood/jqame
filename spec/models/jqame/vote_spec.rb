@@ -17,7 +17,7 @@ describe Jqame::Vote do
 
   describe 'Methods' do
     let(:downvote) { FactoryGirl.create(:jqame_downvote) }
-    let(:vote) { FactoryGirl.create(:jqame_vote) }
+    let(:vote)     { FactoryGirl.create(:jqame_vote) }
 
     it 'verifies that #downvote? works as expected' do
       downvote.should be_downvote
@@ -38,27 +38,40 @@ describe Jqame::Vote do
     end
 
     describe 'Class methods' do
-      it 'verifies that #affecting_votables_of works as expected' do
-        employee = FactoryGirl.create(:employee)
-        other_employee = FactoryGirl.create(:employee)
-        employee_votables = [ FactoryGirl.create(:jqame_question, employee: employee), FactoryGirl.create(:jqame_answer, employee: employee) ]
-        random_votables = [ FactoryGirl.create(:jqame_question), FactoryGirl.create(:jqame_answer) ]
-
-        votes = employee_votables.map { |votable| other_employee.vote_for! votable }
-        random_votables.each          { |votable| other_employee.vote_for! votable }
-
-        described_class.affecting_votables_of(employee).sort.should == votes.sort
-      end
     end
   end
 
   describe 'Scopes' do
     describe '#on' do
+      before do
+        @employee = FactoryGirl.create(:employee)
+      end
       it 'verifies that scope returns an expected set of records' do
-        employee = FactoryGirl.create(:employee)
-        vote = FactoryGirl.create(:jqame_vote, employee: employee)
+        vote = FactoryGirl.create(:jqame_vote, employee: @employee)
 
-        employee.votes.on(vote.votable).should include(vote)
+        @employee.votes.on(vote.votable).should include(vote)
+      end
+
+      it 'verifies that #affecting_votables_of works as expected' do
+        other_employee = FactoryGirl.create(:employee)
+        employee_votables = [ FactoryGirl.create(:jqame_question, employee: @employee), FactoryGirl.create(:jqame_answer, employee: @employee) ]
+        random_votables = [ FactoryGirl.create(:jqame_question), FactoryGirl.create(:jqame_answer) ]
+
+        votes = employee_votables.map { |votable| other_employee.vote_for! votable }
+        random_votables.each          { |votable| other_employee.vote_for! votable }
+
+        described_class.affecting_votables_of(@employee).sort.should == votes.sort
+      end
+
+      it 'verifies that #affecting_votables_by_date works as expected' do
+        employees, expected_votes = [], []
+        5.times { employees << FactoryGirl.create(:employee) }
+
+        question = FactoryGirl.create(:jqame_question, employee: @employee)
+        employees.each { |employee| expected_votes << employee.vote_for!(question) }
+
+        expected_votes.pop.update_attribute(:created_at, Date.yesterday)
+        described_class.affecting_votables_by_date(@employee, Date.today).sort.should == expected_votes.sort
       end
     end
   end
