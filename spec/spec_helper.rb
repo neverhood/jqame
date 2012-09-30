@@ -61,6 +61,8 @@ Spork.each_run do
 
   Dir["#{ENGINE_RAILS_ROOT}/app/models/**/*.rb"].each { |model| load model }
   Dir["#{Rails.root}/app/models/**/*.rb"].each { |model| load model }
+
+  I18n.reload!
 end
 
 
