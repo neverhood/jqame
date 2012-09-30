@@ -30,9 +30,13 @@ Spork.prefork do
     config.run_all_when_everything_filtered = true
     config.use_transactional_fixtures = true
 
+    # Include helpers
+    config.include Capybara::DSL, :example_group => { :file_path => /\bspec\/requests\// }
+    config.include Jqame::Engine.routes.url_helpers
+
     # include matchers modules, should be explicitly set up
     [ SuffrageMatchers ].each do |matchers_module|
-      config.include(matchers_module)
+      config.include matchers_module
     end
 
     DatabaseCleaner.strategy = :truncation

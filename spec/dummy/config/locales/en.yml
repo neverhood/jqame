@@ -4,3 +4,7 @@
 en:
   common:
     permission_denied: 'Fuck'
+
+  employees:
+    sign_in: 'Sign in'
+    sign_out: 'Sign out'

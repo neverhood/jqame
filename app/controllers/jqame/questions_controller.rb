@@ -5,6 +5,7 @@ module Jqame
 
     respond_to :html, :json
     before_filter :find_question!, only: [ :show, :edit, :update, :destroy ]
+    before_filter :"authenticate_#{Jqame.elector_string}!", only: [ :new, :create, :update, :edit, :destroy ]
 
     def index
       @questions = Question.all

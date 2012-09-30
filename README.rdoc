@@ -4,9 +4,12 @@ This project rocks and uses MIT-LICENSE.
 
 = Configuration
 
-**Set the Jqame.elector_class in your application**
+**Set the Jqame.elector_class and Jqame.current_elector in your application**
 *example:*
 
 `lib/initializers/jqame.rb:`
 
-`Jqame.elector_class = 'User'`
+`Jqame.elector_class   = 'User'`
+`Jqame.current_elector = 'current_user'`
+
+**Implement the `ElectorAuthentication` module with `sign_in` and `sign_out` methods. It should be required in your spec_helper

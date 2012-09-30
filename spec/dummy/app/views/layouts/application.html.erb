@@ -8,6 +8,10 @@
 </head>
 <body>
 
+<%- if employee_signed_in? %>
+  <%= link_to t('employees.sign_out'), destroy_employee_session_path, method: 'delete' %>
+<% end %>
+
 <%= yield %>
 
 </body>
