@@ -1,0 +1,9 @@
+
+en:
+  jqame:
+    questions:
+      submit: 'Save Question'
+      index:
+        ask_question: 'Ask Question'
+    answers:
+      submit: 'Save Answer'

@@ -1,0 +1,6 @@
+<%= simple_form_for question, html: { id: 'new-question', class: 'form form-horizontal' } do |form| %>
+  <%= form.input :title %>
+  <%= form.input :body %>
+
+  <%= form.submit t('questions.submit'), disable_with: t('common.please_wait') %>
+<% end %>

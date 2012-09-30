@@ -21,6 +21,7 @@ Spork.prefork do
   end
 
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+  Dir[Rails.root.join("#{ENGINE_RAILS_ROOT}/spec/support/**/*.rb")].each {|f| require f}
 
   RSpec.configure do |config|
     # Adding focus filter to RSpec so we can choose the spec that 

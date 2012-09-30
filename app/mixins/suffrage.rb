@@ -58,6 +58,14 @@ module Suffrage
       select(date_predicate + " AS date").map { |record| Date.parse(record.date) }
   end
 
+  def owns_votable? votable
+    if votable.is_a?(Jqame::Answer) or votable.is_a?(Jqame::Question)
+      votable.elector_id == id
+    else
+      false
+    end
+  end
+
   module ClassMethods
   end
 

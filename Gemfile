@@ -9,6 +9,7 @@ gemspec
 gem "jquery-rails"
 gem "devise"
 gem "pry-rails"
+gem 'simple_form'
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
