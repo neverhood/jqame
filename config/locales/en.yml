@@ -11,6 +11,7 @@ en:
     answers:
       answer:
         edit: 'Edit'
+        destroy: 'Delete'
       form:
         submit: 'Save Answer'
       edit:

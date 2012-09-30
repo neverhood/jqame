@@ -5,7 +5,9 @@
 
   <%- if elector_signed_in? and current_elector.owns_votable?(answer) %>
     <div class='options'>
-      <%= link_to t('.edit'), edit_question_answer_path(question_id: answer.question_id, id: answer) %>
+      <%= link_to t('.edit'), edit_question_answer_path(question_id: answer.question_id, id: answer.id) %>
+      <%= link_to t('.destroy'), question_answer_path(question_id: answer.question_id, id: answer.id), method: 'delete',
+                                 data: { confirm: t('common.are_you_sure?') } %>
     </div>
   <% end %>
 </div>

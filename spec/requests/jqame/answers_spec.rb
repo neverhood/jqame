@@ -36,6 +36,18 @@ describe 'Answers' do
       current_path.should == jqame.question_path(question)
       page.should have_content(new_answer_body)
     end
+
+    it 'ensures that elector is able to destroy his answer' do
+      answer.save
+      visit jqame.question_path(question)
+
+      within "div#answer-#{answer.id}" do
+        click_link I18n.t('jqame.answers.answer.destroy')
+      end
+
+      current_path.should == jqame.question_path(question)
+      page.should_not have_content(answer.body)
+    end
   end
 
   context 'Elector has not signed in' do
