@@ -21,7 +21,7 @@ module Jqame
     end
 
     def create
-      @question = Question.create(params[:question])
+      @question = current_elector.questions.create(params[:question])
       respond_with @question
     end
 
@@ -41,7 +41,7 @@ module Jqame
     private
 
     def require_question_owner!
-      render_permission_denied unless current_elector.owns_votable?(@question)
+      render_permission_denied unless current_elector.owns_suffrage?(@question)
     end
 
   end

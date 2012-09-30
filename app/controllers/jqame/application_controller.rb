@@ -30,7 +30,7 @@ module Jqame
 
     def _find_record! model
       model_name = model.model_name.sub(/.*::/, '').underscore
-      record = model.where(id: params[:id] || params[:"#{model_name}_id"]).first
+      record = model.where(id: ( params[:"#{model_name}_id"] || params[:id] )).first
 
       if record.nil?
         render_not_found

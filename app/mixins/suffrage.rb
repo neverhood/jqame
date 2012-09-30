@@ -58,12 +58,9 @@ module Suffrage
       select(date_predicate + " AS date").map { |record| Date.parse(record.date) }
   end
 
-  def owns_votable? votable
-    if votable.is_a?(Jqame::Answer) or votable.is_a?(Jqame::Question)
-      votable.elector_id == id
-    else
-      false
-    end
+  def owns_suffrage? suffrage
+    return false unless [ Jqame::Answer, Jqame::Comment, Jqame::Question ].include?(suffrage.class)
+    suffrage.elector_id == id
   end
 
   module ClassMethods

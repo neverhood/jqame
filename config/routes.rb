@@ -6,4 +6,6 @@ Jqame::Engine.routes.draw do
     resources :answers, except: [ :index, :new ]
   end
 
+  resources :comments, only: [ :create, :edit, :update, :destroy ]
+
 end

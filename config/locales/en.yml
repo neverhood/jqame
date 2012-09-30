@@ -16,3 +16,8 @@ en:
         submit: 'Save Answer'
       edit:
         header: 'Edit Answer'
+    comments:
+      form:
+        submit: 'Submit'
+      comment:
+        destroy: 'Delete'

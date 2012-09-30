@@ -1,0 +1,11 @@
+<div id='comment-<%= comment.id %>'>
+  <div class='body'>
+    <%= comment.body %>
+  </div>
+
+  <%- if elector_signed_in? and current_elector.owns_suffrage?(comment) %>
+    <div class='options'>
+      <%= link_to t('.destroy'), comment_path(comment), method: 'delete', data: { confirm: t('common.are_you_sure?') } %>
+    </div>
+  <% end %>
+</div>

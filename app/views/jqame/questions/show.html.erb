@@ -7,11 +7,15 @@
     <%= @question.body %>
   </div>
 
-  <%- if elector_signed_in? and current_elector.owns_votable?(@question) %>
+  <%- if elector_signed_in? and current_elector.owns_suffrage?(@question) %>
     <div class='options'>
       <%= link_to t('.destroy'), jqame.question_path(@question), method: 'delete', data: { confirm: t('common.are_you_sure?') } %>
     </div>
   <% end %>
+
+  <div id='comments'>
+    <%= render partial: 'jqame/comments/comment', collection: @question.comments %>
+  </div>
 </div>
 
 <%- if elector_signed_in? %>
@@ -23,3 +27,5 @@
 <div id='answers'>
   <%= render partial: 'jqame/answers/answer', collection: @question.answers %>
 </div>
+
+<%= render 'jqame/comments/form' %>
