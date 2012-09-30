@@ -10,9 +10,22 @@ describe 'Suffrage' do
   describe 'elector' do
     subject { @elector }
 
-    it { should have_many(:questions) }
-    it { should have_many(:answers) }
-    it { should have_many(:votes) }
+    describe 'Associations' do
+      it { should have_many(:questions) }
+      it { should have_many(:answers) }
+      it { should have_many(:votes) }
+
+      it 'verifies that associated records are succesfully destroyed' do
+        records = [
+          FactoryGirl.create(:jqame_question, elector: @elector),
+          FactoryGirl.create(:jqame_answer, elector: @elector),
+          FactoryGirl.create(:jqame_comment, elector: @elector, votable: Jqame::Question.last)
+        ]
+
+        @elector.destroy
+        [ Jqame::Question, Jqame::Answer, Jqame::Comment ].each { |model| model.where(elector_id: @elector.id).count.should be_zero }
+      end
+    end
 
     describe 'Methods' do
 

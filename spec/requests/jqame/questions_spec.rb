@@ -29,6 +29,14 @@ describe 'Questions' do
         update_question(new_question_attributes)
         page.should have_content(new_question_attributes[:title])
       end
+
+      it 'ensures that elector is able to destroy his question' do
+        visit jqame.question_path(question)
+
+        click_link I18n.t('jqame.questions.show.destroy')
+        current_path.should == jqame.questions_path
+        page.should_not have_content(question.title)
+      end
     end
 
     context 'Not votable owner' do

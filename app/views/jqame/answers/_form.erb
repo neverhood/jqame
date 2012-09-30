@@ -1,0 +1,5 @@
+<%= simple_form_for [ jqame, question, answer ], html: { id: 'new-answer', class: 'form form-horizontal' } do |form| %>
+  <%= form.input :body %>
+
+  <%= form.submit t('.submit'), disable_with: t('common.please_wait') %>
+<% end %>

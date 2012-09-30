@@ -1,9 +1,10 @@
 module Jqame
   class ApplicationController < ActionController::Base
 
-    helper_method :render_not_found, :render_permission_denied, :current_elector
+    helper_method :render_not_found, :render_permission_denied, :current_elector, :elector_signed_in?
 
     alias_method :authenticate_elector!, :"authenticate_#{Jqame.elector_string}!"
+    alias_method :elector_signed_in?, :"#{Jqame.elector_string}_signed_in?"
 
     def render_not_found
       raise ActionController::RoutingError.new('Not Found')

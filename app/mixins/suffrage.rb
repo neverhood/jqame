@@ -73,6 +73,7 @@ module Suffrage
     base.has_many :questions, class_name: 'Jqame::Question', foreign_key: 'elector_id', dependent: :destroy
     base.has_many :answers, class_name: 'Jqame::Answer', foreign_key: 'elector_id', dependent: :destroy
     base.has_many :votes, class_name: 'Jqame::Vote', foreign_key: 'elector_id', dependent: :destroy
+    base.has_many :comments, class_name: 'Jqame::Comment', foreign_key: 'elector_id', dependent: :destroy
   end
 
 end

@@ -4,19 +4,19 @@ module VotableSpecHelper
     visit jqame.new_question_path
     populate_question_attributes(question)
 
-    click_button I18n.t('questions.submit')
+    click_button I18n.t('jqame.questions.form.submit')
   end
 
   def update_question(attributes)
     populate_question_attributes(attributes)
 
-    click_button I18n.t('questions.submit')
+    click_button I18n.t('jqame.questions.form.submit')
   end
 
   def submit_new_answer(answer)
     visit jqame.question_path(answer.question)
 
-    click_button I18n.t('answers.submit')
+    click_button I18n.t('jqame.answers.form.submit')
   end
 
   def update_answer

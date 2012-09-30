@@ -22,13 +22,11 @@ module Jqame
 
     def create
       @question = Question.create(params[:question])
-
       respond_with @question
     end
 
     def update
       @question.update_attributes(params[:question])
-
       respond_with @question
     end
 
@@ -36,6 +34,8 @@ module Jqame
     end
 
     def destroy
+      @question.destroy
+      respond_with @question
     end
 
     private

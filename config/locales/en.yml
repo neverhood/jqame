@@ -2,8 +2,16 @@
 en:
   jqame:
     questions:
-      submit: 'Save Question'
+      form:
+        submit: 'Save Question'
       index:
         ask_question: 'Ask Question'
+      show:
+        destroy: 'Delete question'
     answers:
-      submit: 'Save Answer'
+      answer:
+        edit: 'Edit'
+      form:
+        submit: 'Save Answer'
+      edit:
+        header: 'Edit Answer'

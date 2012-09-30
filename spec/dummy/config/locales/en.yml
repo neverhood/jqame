@@ -5,6 +5,7 @@ en:
   common:
     permission_denied: 'Fuck'
     please_wait: 'Please wait'
+    are_you_sure?: 'Are you sure?'
 
   employees:
     sign_in: 'Sign in'

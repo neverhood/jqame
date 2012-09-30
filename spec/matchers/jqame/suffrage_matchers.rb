@@ -2,7 +2,7 @@ module SuffrageMatchers
 
   %w(for against).each do |vote_kind|
     # defines #be_able_to_vote_for and #be_able_to_vote_against matchers
-    ::Rspec::Matchers.define :"be_able_to_vote_#{vote_kind}" do |votable|
+    ::RSpec::Matchers.define :"be_able_to_vote_#{vote_kind}" do |votable|
       match do |elector|
         elector.send(:"can_vote_#{vote_kind}?", votable) === true && elector.send(:"vote_#{vote_kind}", votable).valid?
       end

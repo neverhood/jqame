@@ -6,4 +6,20 @@
   <div class='body'>
     <%= @question.body %>
   </div>
+
+  <%- if elector_signed_in? and current_elector.owns_votable?(@question) %>
+    <div class='options'>
+      <%= link_to t('.destroy'), jqame.question_path(@question), method: 'delete', data: { confirm: t('common.are_you_sure?') } %>
+    </div>
+  <% end %>
+</div>
+
+<%- if elector_signed_in? %>
+  <div id='post-answer'>
+    <%= render partial: 'jqame/answers/form', locals: { question: @question, answer: Jqame::Answer.new } %>
+  </div>
+<% end %>
+
+<div id='answers'>
+  <%= render partial: 'jqame/answers/answer', collection: @question.answers %>
 </div>
