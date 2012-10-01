@@ -6,15 +6,16 @@ describe 'Votable' do
         before do
           @question = FactoryGirl.build(:jqame_question)
           @comment = FactoryGirl.build(:jqame_comment, votable: @question)
+          @elector = FactoryGirl.create(:elector)
         end
 
         it 'should save and return comment if valid params were given' do
-          @question.comment_with(body: @comment.body).should(be_persisted)
+          @question.comment_with(@elector, body: @comment.body).should(be_persisted)
           @question.comments.count.should == 1
         end
 
         it 'should return a comment with #errors if invalid params were given' do
-          @question.comment_with(body: '').errors.should_not be_empty
+          @question.comment_with(@elector, body: '').errors.should_not be_empty
         end
       end
     end

@@ -10,7 +10,7 @@ module Jqame
     before_filter :require_comment_owner!, only: [ :destroy, :edit, :update ]
 
     def create
-      @comment = @votable.comment_with(params[:comment], elector)
+      @comment = @votable.comment_with(current_elector, params[:comment])
       respond_with @comment, location: jqame.question_path(@comment.question)
     end
 

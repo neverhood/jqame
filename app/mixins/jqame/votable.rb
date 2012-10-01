@@ -9,7 +9,7 @@ module Jqame::Votable
     options[:votable_type].constantize.where(id: options[:votable_id]).first
   end
 
-  def comment_with options, elector
+  def comment_with elector, options
     comments.new(body: options[:body]).tap do |comment|
       comment.elector_id = elector.id
       comment.save

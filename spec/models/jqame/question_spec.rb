@@ -28,15 +28,16 @@ describe Jqame::Question do
       before do
         @question = FactoryGirl.build(:jqame_question)
         @answer = FactoryGirl.build(:jqame_answer, question: @question)
+        @elector = FactoryGirl.create(:elector)
       end
 
       it 'should save and return an answer if valid params were given' do
-        @question.answer_with(body: @answer.body).should(be_persisted)
+        @question.answer_with(@elector, body: @answer.body).should(be_persisted)
         @question.answers.count.should == 1
       end
 
       it 'should return an answer with #errors if invalid params were given' do
-        @question.answer_with(body: '').errors.should_not be_empty
+        @question.answer_with(@elector, body: '').errors.should_not be_empty
       end
     end
   end

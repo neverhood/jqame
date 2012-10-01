@@ -17,7 +17,7 @@ module Jqame
     scope :top, -> count = 5 { limit(count).order("'jqame_questions'.'current_rating' DESC") }
 
     # builds and attempts to save an answer
-    def answer_with options, elector
+    def answer_with elector, options
       answers.new(options).tap do |answer|
         answer.elector_id = elector.id
         answer.save

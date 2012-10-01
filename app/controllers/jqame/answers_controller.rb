@@ -11,7 +11,8 @@ module Jqame
     before_filter :require_answer_owner!, only: [ :destroy, :edit, :update ]
 
     def create
-      @answer = @question.answer_with(params[:answer], current_elector)
+      @answer = @question.answer_with(current_elector, params[:answer])
+
       respond_with [ @question, @answer ], location: jqame.question_path(@question)
     end
 
@@ -24,7 +25,11 @@ module Jqame
       @question = @answer.question
       @answer.update_attributes(params[:answer])
 
-      respond_with [@question, @answer], location: jqame.edit_question_answer_path(@question, @answer)
+      if @answer.valid?
+        redirect_to jqame.question_path(@question)
+      else
+        respond_with [@question, @answer], location: jqame.edit_question_answer_path(@question, @answer)
+      end
     end
 
     def edit
