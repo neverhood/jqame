@@ -51,7 +51,7 @@ describe 'Questions' do
     it 'ensures that elector will be redirected to sign_in page when he attempts to create new question' do
       visit jqame.questions_path
 
-      click_link I18n.t('jqame.questions.index.ask_question')
+      click_link I18n.t('jqame.application.header.ask_question')
       current_path.should == send(:"new_#{Jqame.elector_string}_session_path")
     end
   end

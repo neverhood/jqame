@@ -1,0 +1,56 @@
+
+ru:
+  jqame:
+    common:
+      are_you_sure?: 'Вы уверены?'
+      submit: 'Сохранить'
+      please_wait: 'Пожалуйста, подождите ..'
+
+    application:
+      header:
+        brand: 'Jqame'
+        questions: 'Вопросы'
+        ask_question: 'Задать вопрос'
+
+    # Controllers
+    questions:
+      form:
+        submit: 'Сохранить'
+      index:
+        header: 'Вопросы'
+      show:
+        answers: 'Ответы'
+        destroy: 'Удалить'
+        edit: 'Редактировать'
+      new:
+        header: 'Новый вопрос'
+
+    answers:
+      answer:
+        edit: 'Редактировать'
+        destroy: 'Удалить'
+      form_create:
+        header: 'Новый ответ'
+      form_edit:
+        header: 'Редактировать ответ'
+      edit:
+        header: 'Редактировать ответ'
+
+    comments:
+      form:
+        submit: 'Сохранить'
+      comment:
+        destroy: 'Удалить'
+
+  # ActiveRecord
+  activerecord:
+    models:
+      jqame/question: 'Вопрос'
+      jqame/answer: 'Ответ'
+    attributes:
+      jqame/question:
+        body: 'Вопрос'
+        title: 'Заголовок'
+      jqame/answer:
+        body: 'Ответ'
+

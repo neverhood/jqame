@@ -9,7 +9,7 @@
 
   <%- if elector_signed_in? and current_elector.owns_suffrage?(@question) %>
     <div class='options'>
-      <%= link_to t('.destroy'), jqame.question_path(@question), method: 'delete', data: { confirm: t('common.are_you_sure?') } %>
+      <%= link_to t('.destroy'), jqame.question_path(@question), method: 'delete', data: { confirm: t('jqame.common.are_you_sure?') } %>
       <%= link_to t('.edit'), jqame.edit_question_path(@question) %>
     </div>
   <% end %>
@@ -20,7 +20,7 @@
 </div>
 
 <div id='answers'>
-  <legend> answers </legend>
+  <legend> <%= t '.answers' %> </legend>
   <%= render @question.answers %>
 </div>
 

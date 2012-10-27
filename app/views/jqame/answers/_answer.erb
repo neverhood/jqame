@@ -6,7 +6,7 @@
   <%- if elector_signed_in? and current_elector.owns_suffrage?(answer) %>
     <div class='options'>
       <%= link_to t('.edit'), edit_answer_path(answer) %>
-      <%= link_to t('.destroy'), answer_path(answer), method: 'delete', data: { confirm: t('common.are_you_sure?') } %>
+      <%= link_to t('.destroy'), answer_path(answer), method: 'delete', data: { confirm: t('jqame.common.are_you_sure?') } %>
     </div>
   <% end %>
 

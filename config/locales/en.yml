@@ -17,6 +17,7 @@ en:
       index:
         header: 'Questions'
       show:
+        answers: 'Answers'
         destroy: 'Delete question'
         edit: 'Edit question'
       new:

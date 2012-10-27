@@ -10,8 +10,7 @@ module Jqame
                         :resource => model.class.model_name.human.downcase)
 
       html = <<-HTML
-      <div class="alert alert-error" id="error_explanation">
-        <h2>#{sentence}</h2>
+      <div class="alert alert-error" id="error-explanation">
         <ul>#{messages}</ul>
       </div>
       HTML

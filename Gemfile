@@ -9,6 +9,7 @@ gemspec
 gem "jquery-rails"
 gem "devise"
 gem "pry-rails"
+gem "russian"
 
 gem "strong_parameters"
 gem "simple_form"
