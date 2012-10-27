@@ -5,7 +5,7 @@ module Jqame
 
     respond_to :html
 
-    before_filter :find_question!, only: [ :show, :edit, :update, :destroy ]
+    before_filter :find_question!, only: [ :show, :edit, :update, :destroy, :answer ]
     before_filter :authenticate_elector!, only: [ :new, :create, :update, :edit, :destroy ]
     before_filter :require_question_owner!, only: [ :update, :edit, :destroy ]
 
@@ -35,6 +35,11 @@ module Jqame
 
     def destroy
       @question.destroy
+      respond_with @question
+    end
+
+    def answer
+      @question.answer_with current_elector, params[:answer].permit(:body)
       respond_with @question
     end
 

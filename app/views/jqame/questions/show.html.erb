@@ -10,6 +10,7 @@
   <%- if elector_signed_in? and current_elector.owns_suffrage?(@question) %>
     <div class='options'>
       <%= link_to t('.destroy'), jqame.question_path(@question), method: 'delete', data: { confirm: t('common.are_you_sure?') } %>
+      <%= link_to t('.edit'), jqame.edit_question_path(@question) %>
     </div>
   <% end %>
 
@@ -19,13 +20,11 @@
 </div>
 
 <%- if elector_signed_in? %>
-  <div id='post-answer'>
-    <%= render partial: 'jqame/answers/form', locals: { question: @question, answer: Jqame::Answer.new } %>
-  </div>
+  <div id='post-answer'> <%= render 'jqame/answers/form_create' %> </div>
 <% end %>
 
 <div id='answers'>
-  <%= render partial: 'jqame/answers/answer', collection: @question.answers %>
+  <%= render @question.answers %>
 </div>
 
 <%= render 'jqame/comments/form' %>

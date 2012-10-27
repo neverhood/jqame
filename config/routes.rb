@@ -3,9 +3,9 @@ Jqame::Engine.routes.draw do
   root to: 'questions#index'
 
   resources :questions do
-    resources :answers, except: [ :index, :new ]
+    post :answer, :on => :member # creates new answer
   end
-
+  resources :answers, except: [ :index, :new, :show, :create ]
   resources :comments, only: [ :create, :edit, :update, :destroy ]
 
 end

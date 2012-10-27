@@ -1,6 +1,10 @@
 
 en:
   jqame:
+    common:
+      submit: 'Save'
+      please_wait: 'Please wait..'
+
     questions:
       form:
         submit: 'Save Question'
@@ -8,14 +12,19 @@ en:
         ask_question: 'Ask Question'
       show:
         destroy: 'Delete question'
+        edit: 'Edit question'
+
     answers:
       answer:
         edit: 'Edit'
         destroy: 'Delete'
-      form:
-        submit: 'Save Answer'
+      form_create:
+        header: 'New Answer'
+      form_edit:
+        header: 'Edit Answer'
       edit:
         header: 'Edit Answer'
+
     comments:
       form:
         submit: 'Submit'

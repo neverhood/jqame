@@ -1,0 +1,7 @@
+<h3> <%= t '.header' %> </h3>
+
+<%= simple_form_for Jqame::Answer.new, url: jqame.answer_question_path(@question), html: { id: 'new-answer', class: 'form form-horizontal' } do |form| %>
+  <%= form.input :body %>
+
+  <%= form.submit t('jqame.common.submit'), disable_with: t('jqame.common.please_wait') %>
+<% end %>
