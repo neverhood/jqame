@@ -1,3 +1,6 @@
+require 'bootstrap-sass'
+require 'font-awesome-sass-rails'
+
 module Jqame
   class Engine < ::Rails::Engine
     isolate_namespace Jqame

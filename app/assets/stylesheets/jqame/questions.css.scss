@@ -1,10 +1,17 @@
-/*
-  Place all the styles related to the matching controller here.
-  They will automatically be included in application.css.
-*/
-
 body#jqame-questions {
+
+    @import "jqame/common_classes";
     div#comment-form-container {
         display: none;
     }
+
+    div.question-entry {
+        margin: 10px 0;
+
+        .title {
+            font-size: 18px;
+            margin: 0px auto;
+        }
+    }
+
 }

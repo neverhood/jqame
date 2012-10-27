@@ -1,9 +1,9 @@
 <div id='question'>
   <div class='title'>
-    <%= @question.title %>
+    <h4> <%= link_to @question.title, jqame.question_path(@question) %> </h4>
   </div>
 
-  <div class='body'>
+  <div class='body well'>
     <%= @question.body %>
   </div>
 
@@ -19,12 +19,13 @@
   </div>
 </div>
 
-<%- if elector_signed_in? %>
-  <div id='post-answer'> <%= render 'jqame/answers/form_create' %> </div>
-<% end %>
-
 <div id='answers'>
+  <legend> answers </legend>
   <%= render @question.answers %>
 </div>
 
-<%= render 'jqame/comments/form' %>
+<%- if elector_signed_in? %>
+  <div id='post-answer'> <%= render 'jqame/answers/form_create' %> </div>
+  <div id='post-comment'> <%= render 'jqame/comments/form' %> </div>
+<% end %>
+

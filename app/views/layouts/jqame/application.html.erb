@@ -8,12 +8,15 @@
   </head>
 
   <body id='jqame-<%= controller_name.dasherize %>' data-action='<%= action_name %>'>
-    <div class='container'>
+    <%= render 'header' %>
+
+    <div class='container' id='main-content'>
       <div class='row'>
         <%= yield %>
       </div>
     </div>
 
+    <%= render 'footer' %>
     <%= javascript_include_tag "jqame/application" %>
   </body>
 </html>

@@ -5,14 +5,22 @@ en:
       submit: 'Save'
       please_wait: 'Please wait..'
 
+    application:
+      header:
+        brand: 'Jqame'
+        questions: 'Questions'
+        ask_question: 'Ask Question'
+
     questions:
       form:
         submit: 'Save Question'
       index:
-        ask_question: 'Ask Question'
+        header: 'Questions'
       show:
         destroy: 'Delete question'
         edit: 'Edit question'
+      new:
+        header: 'New Question'
 
     answers:
       answer:

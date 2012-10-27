@@ -1,8 +1,10 @@
-<%= simple_form_for question, html: { id: 'new-question', class: 'form form-horizontal' } do |form| %>
-  <%= error_messages_for question %>
+<div id='answer-form-container' class='form-container'>
+  <%= simple_form_for @question, html: { id: 'new-question', class: 'form form-horizontal' } do |form| %>
+    <%= error_messages_for @question %>
 
   <%= form.input :title %>
-  <%= form.input :body  %>
+  <%= form.input :body, input_html: { class: 'span6', rows: 7 }  %>
 
   <%= form.submit t('.submit'), disable_with: t('common.please_wait') %>
-<% end %>
+  <% end %>
+</div>

@@ -1,7 +1,9 @@
-<h3> <%= t '.header' %> </h3>
+<div id='new-answer-form-container' class='form-container'>
+  <legend> <%= t '.header' %> </legend>
 
-<%= simple_form_for Jqame::Answer.new, url: jqame.answer_question_path(@question), html: { id: 'new-answer', class: 'form form-horizontal' } do |form| %>
-  <%= form.input :body %>
+  <%= simple_form_for Jqame::Answer.new, url: jqame.answer_question_path(@question), html: { id: 'new-answer', class: 'form form-horizontal' } do |form| %>
+    <%= form.input :body, input_html: { class: 'span6', rows: 7 } %>
 
-  <%= form.submit t('jqame.common.submit'), disable_with: t('jqame.common.please_wait') %>
-<% end %>
+    <%= form.submit t('jqame.common.submit'), disable_with: t('jqame.common.please_wait') %>
+  <% end %>
+</div>

@@ -1,9 +1,11 @@
-<div id="question-<%= question.id %>">
+<div id='question-<%= question.id %>' class='question-entry'>
   <div class='title'>
-    <%= question.title %>
+    <%= link_to question.title, jqame.question_path(question) %>
   </div>
 
   <div class='body'>
-    <%= question.title %>
+    <%= truncate(question.body, length: 100) %>
   </div>
 </div>
+
+<hr />

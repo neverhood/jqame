@@ -19,5 +19,13 @@ module Jqame
       html.html_safe
     end
 
+    def navbar_link(text, path)
+      "<li class='#{ current_page?(path) ? "active" : ""}'> #{ link_to text, path } </li>".html_safe
+    end
+
+    def page_header(text)
+      "<div class='page-header'> <h3> #{text} </h3> </div>".html_safe
+    end
+
   end
 end

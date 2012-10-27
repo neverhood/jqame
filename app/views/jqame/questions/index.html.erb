@@ -1,5 +1,3 @@
-<%= link_to t('.ask_question'), jqame.new_question_path %>
+<%= page_header t('.header') %>
 
-<div id='questions'>
-  <%= render partial: 'question', collection: @questions %>
-</div>
+<div id='questions'> <%= render @questions %> </div>
