@@ -10,7 +10,7 @@ module Jqame
     before_filter :require_comment_owner!, only: [ :destroy, :edit, :update ]
 
     def create
-      @comment = @votable.comment_with(current_elector, params[:comment])
+      @comment = @votable.comment_with(current_elector, comment_params)
       respond_with @comment, location: jqame.question_path(@comment.question)
     end
 
@@ -23,17 +23,14 @@ module Jqame
     end
 
     def update
-      @comment.update_attributes(body: params[:comment])
+      @comment.update_attributes(params[:comment].permit(:body))
     end
 
     private
 
     def find_votable!
-      if @votable = Jqame::Votable.find(params[:comment])
-        params[:comment].reject! { |key, value| not Jqame::Comment.accessible_attributes.include?(key) }
-      else
-        render_not_found
-      end
+      @votable = Jqame::Votable.find(params[:comment])
+      render_not_found if @votable.nil?
     end
 
     def find_comment!
@@ -43,6 +40,10 @@ module Jqame
 
     def require_comment_owner!
       render_permission_denied unless current_elector.owns_suffrage?(@comment)
+    end
+
+    def comment_params
+      action_name.inquiry.create?? params[:comment].permit(:body, :votable) : params[:comment].permit(:body)
     end
   end
 end

@@ -11,7 +11,7 @@ module Jqame
     before_filter :require_answer_owner!, only: [ :destroy, :edit, :update ]
 
     def create
-      @answer = @question.answer_with(current_elector, params[:answer])
+      @answer = @question.answer_with(current_elector, answer_params)
 
       respond_with [ @question, @answer ], location: jqame.question_path(@question)
     end
@@ -23,7 +23,7 @@ module Jqame
 
     def update
       @question = @answer.question
-      @answer.update_attributes(params[:answer])
+      @answer.update_attributes(answer_params)
 
       if @answer.valid?
         redirect_to jqame.question_path(@question)
@@ -39,6 +39,10 @@ module Jqame
 
     def require_answer_owner!
       render_permission_denied unless current_elector.owns_suffrage?(@answer)
+    end
+
+    def answer_params
+      params[:answer].permit(:body)
     end
 
   end

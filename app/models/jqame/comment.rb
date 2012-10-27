@@ -1,7 +1,5 @@
 module Jqame
   class Comment < ActiveRecord::Base
-    attr_accessible :body, :votable
-
     belongs_to :votable, polymorphic: true
     belongs_to :elector, class_name: Jqame.elector_class
 

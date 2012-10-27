@@ -3,7 +3,6 @@ module Jqame
     include Jqame::Votable
 
     @votable_type = :question
-    attr_accessible :body, :title
 
     validates :body, :title, presence: true
     validates :title, uniqueness: { case_sensitive: false }
@@ -18,10 +17,7 @@ module Jqame
 
     # builds and attempts to save an answer
     def answer_with elector, options
-      answers.new(options).tap do |answer|
-        answer.elector_id = elector.id
-        answer.save
-      end
+      answers.new(options.merge({ elector_id: elector.id })).tap { |answer| answer.save }
     end
 
   end

@@ -21,12 +21,12 @@ module Jqame
     end
 
     def create
-      @question = current_elector.questions.create(params[:question])
+      @question = current_elector.questions.create(question_params)
       respond_with @question
     end
 
     def update
-      @question.update_attributes(params[:question])
+      @question.update_attributes(question_params)
       respond_with @question
     end
 
@@ -42,6 +42,10 @@ module Jqame
 
     def require_question_owner!
       render_permission_denied unless current_elector.owns_suffrage?(@question)
+    end
+
+    def question_params
+      params[:question].permit(:body, :title)
     end
 
   end

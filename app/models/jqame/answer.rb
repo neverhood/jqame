@@ -3,7 +3,6 @@ module Jqame
     include Jqame::Votable
 
     @votable_type = :answer
-    attr_accessible :body
 
     belongs_to :question
     has_many :comments, :dependent => :destroy, :as => :votable
