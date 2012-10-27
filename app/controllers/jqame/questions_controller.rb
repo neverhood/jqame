@@ -39,7 +39,7 @@ module Jqame
     end
 
     def answer
-      @question.answer_with current_elector, params[:answer].permit(:body)
+      @question.answer_with current_elector, params.require(:answer).permit(:body)
       respond_with @question
     end
 
@@ -50,7 +50,7 @@ module Jqame
     end
 
     def question_params
-      params[:question].permit(:body, :title)
+      params.require(:question).permit(:body, :title)
     end
 
   end

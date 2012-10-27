@@ -38,7 +38,8 @@ module Jqame
     private
 
     def find_votable!
-      @votable = Jqame::Votable.find(comment_params || vote_params)
+      parameters = action_name == 'comment' ? comment_params : vote_params
+      @votable = Jqame::Votable.find(parameters)
 
       render_not_found if @votable.nil?
     end
@@ -48,7 +49,7 @@ module Jqame
     end
 
     def vote_params
-      params.require(:votable_id, :votable_type)
+      params.permit(:votable_id, :votable_type)
     end
 
   end

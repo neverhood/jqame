@@ -10,8 +10,6 @@ module Jqame
     end
 
     def votable= votable
-      return nil unless Votable.votables.include?(votable.class) # since it`s accessible for mass-assigment
-
       tap do |vote|
         vote.votable_id = votable.id
         vote.votable_type = votable.class.model_name

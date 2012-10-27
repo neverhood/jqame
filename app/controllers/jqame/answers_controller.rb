@@ -35,7 +35,7 @@ module Jqame
     end
 
     def answer_params
-      params[:answer].permit(:body)
+      params.require(:answer).permit(:body)
     end
 
   end
