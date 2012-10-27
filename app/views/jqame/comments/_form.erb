@@ -1,5 +1,5 @@
 <div id='comment-form-container'>
-  <%= simple_form_for [ jqame, Jqame::Comment.new ], html: { id: 'new-comment', class: 'form form-inline' } do |form| %>
+  <%= simple_form_for [ jqame, Jqame::Comment.new ], url: comment_votables_path, html: { id: 'new-comment', class: 'form form-inline' } do |form| %>
     <%= form.input :body %>
 
     <%= form.input :votable_id, :as => :hidden %>

@@ -10,10 +10,11 @@ module Jqame::Votable
   end
 
   def comment_with elector, options
-    comments.new(body: options[:body]).tap do |comment|
-      comment.elector_id = elector.id
-      comment.save
-    end
+    comments.new({ body: options[:body], elector_id: elector.id }).tap { |comment| comment.save }
+  end
+
+  def question?
+    self.is_a? Jqame::Question
   end
 
   def self.included(base)
