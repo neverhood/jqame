@@ -12,7 +12,20 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
+//
+//= require jqame/api
+//
+//= require jqame/questions
+//= require jqame/answers
+//= require jqame/comments
 //
 
 
+'use strict';
+
+$.ajaxSettings.dataType = 'json';
+
+(function($, undefined) {
+    $.api.controller = document.body.id;
+    $.api.action = document.body.attributes['data-action'].value;
+})(jQuery);
