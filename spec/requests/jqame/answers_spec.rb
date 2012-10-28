@@ -8,7 +8,7 @@ describe 'Answers' do
   let(:question) { FactoryGirl.create(:jqame_question, elector: elector) }
   let(:answer)  { FactoryGirl.build(:jqame_answer, elector: elector, question: question, body: 'Brand New Answer') }
 
-  before { @answer = FactoryGirl.create(:jqame_answer) }
+  before { @answer = FactoryGirl.create(:jqame_answer, question: question) }
 
   context 'Elector Signed in' do
     before { sign_in elector }
@@ -47,6 +47,23 @@ describe 'Answers' do
 
       current_path.should == jqame.question_path(question)
       page.should_not have_content(answer.body)
+    end
+
+    it 'ensures question owner can  accept an answer' do
+      visit jqame.question_path(question)
+
+      within "div#answer-#{@answer.id} div.suffrage" do
+        find('.accept-answer').click
+        question.should have_accepted_answer
+      end
+    end
+
+    it 'ensures question owner can unaccept an answer' do
+      elector.accept! question, @answer
+      visit jqame.question_path(question)
+
+      find('.unaccept-answer').click
+      question.should_not have_accepted_answer
     end
   end
 
