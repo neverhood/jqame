@@ -1,17 +1,32 @@
 body#jqame-questions {
 
-    @import "jqame/common_classes";
     div#comment-form-container {
         display: none;
     }
 
-    div.question-entry {
-        margin: 10px 0;
+    %question-entry-side-note {
+    }
 
-        .title {
-            font-size: 18px;
-            margin: 0px auto;
+    div.question-index-entry {
+        @extend .span12;
+
+        clear: both;
+        border-bottom: 1px solid #DDD;
+        margin-bottom: 5px;
+        height: 50px;
+        padding: 10px 0;
+
+        div.question-contents {
+            margin-left: 65px;
+
+            div.title {
+                font-size: 18px;
+                margin: 0px auto;
+            }
         }
+    }
+
+    div.question-tagged-entry {
     }
 
 }

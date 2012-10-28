@@ -9,9 +9,6 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require jqame/questions
- *= require jqame/answers
- *= require jqame/comments
  */
 
 @import "bootstrap/variables"; // Modify this for custom colors, font-sizes, etc
@@ -68,6 +65,10 @@
 // APPLICATION CSS //
 @import "font-awesome";
 @import "jqame/common_classes";
+
+@import "jqame/questions";
+@import "jqame/answers";
+@import "jqame/comments";
 
 html, body {
     height: 100%;

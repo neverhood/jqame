@@ -14,6 +14,7 @@ module Jqame
     end
 
     def show
+      Jqame::QuestionView.store!(@question, current_elector) if elector_signed_in?
     end
 
     def new
