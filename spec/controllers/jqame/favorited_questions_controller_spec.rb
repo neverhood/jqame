@@ -1,5 +1,4 @@
 require 'spec_helper'
 
-describe FavoritedQuestionsController do
-
+describe Jqame::FavoritedQuestionsController do
 end
