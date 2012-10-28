@@ -1,0 +1,27 @@
+<div class='suffrage'>
+  <%- if elector_signed_in? and current_elector.can_vote?(votable) %>
+
+    <%# Upvote %>
+
+    <%- if current_elector.can_vote_for?(votable) %>
+      <%= link_to t('.upvote'), upvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type), method: 'post' %>
+    <% else %>
+      <%= link_to t('.upvote'), upvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type), method: 'post', disabled: true %>
+    <% end %>
+
+    <%# Current Votable Rating %>
+    <%= link_to votable.current_rating, votables_path(votable_id: votable.id, votable_type: votable.class.votable_type), method: 'delete' %>
+
+    <%# Downvote %>
+
+    <%- if current_elector.can_vote_against?(votable) %>
+      <%= link_to t('.downvote'), downvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type), method: 'post' %>
+    <% else %>
+      <%= link_to t('.downvote'), downvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type), method: 'post', disabled: true %>
+    <% end %>
+
+  <%- else %>
+    <%# Current Votable Rating %>
+    <%= votable.current_rating %>
+  <% end %>
+</div>

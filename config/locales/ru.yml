@@ -11,6 +11,9 @@ ru:
         brand: 'Jqame'
         questions: 'Вопросы'
         ask_question: 'Задать вопрос'
+      suffrage:
+        upvote: 'За'
+        downvote: 'Против'
 
     # Controllers
     questions:

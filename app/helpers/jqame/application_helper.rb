@@ -5,9 +5,6 @@ module Jqame
       return "" if model.errors.empty?
 
       messages = model.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
-      sentence = I18n.t("errors.messages.not_saved",
-                        :count => model.errors.count,
-                        :resource => model.class.model_name.human.downcase)
 
       html = <<-HTML
       <div class="alert alert-error" id="error-explanation">

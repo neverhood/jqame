@@ -13,6 +13,7 @@ Jqame::Engine.routes.draw do
     post :upvote,   :on => :collection
     post :downvote, :on => :collection
     post :comment,  :on => :collection
+    delete :destroy, :on => :collection
   end
 
 end

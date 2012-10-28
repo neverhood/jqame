@@ -2,7 +2,9 @@ module Jqame
   class Answer < ActiveRecord::Base
     include Jqame::Votable
 
-    @votable_type = :answer
+    def self.votable_type
+      :answer
+    end
 
     belongs_to :question
     has_many :comments, :dependent => :destroy, :as => :votable

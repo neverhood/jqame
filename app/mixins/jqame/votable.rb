@@ -1,10 +1,10 @@
 module Jqame::Votable
 
-  mattr_accessor :votables_mappings, :votable_classes, :votable_classes_idioms
+  mattr_accessor :votable_mappings, :votable_classes, :votable_classes_idioms
 
   @@votable_classes = [ 'Jqame::Question', 'Jqame::Answer' ]
   @@votable_classes_idioms = %w( question answer )
-  @@votables_mappings = { question: Jqame::Question, answer: Jqame::Answer }
+  @@votable_mappings = { question: Jqame::Question, answer: Jqame::Answer }
 
   def self.find(options)
     return nil unless options[:votable_type].present? and options[:votable_id].present?
@@ -21,12 +21,6 @@ module Jqame::Votable
 
   def question?
     self.is_a? Jqame::Question
-  end
-
-  def self.included(base)
-    class << base
-      attr_accessor :votable_type
-    end
   end
 
   module ClassMethods

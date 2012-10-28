@@ -17,6 +17,8 @@
   <div id='comments'>
     <%= render partial: 'jqame/comments/comment', collection: @question.comments %>
   </div>
+
+  <%= render 'suffrage', votable: @question %>
 </div>
 
 <div id='answers'>

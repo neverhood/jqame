@@ -9,7 +9,7 @@ module Jqame
     before_filter :find_votable!
 
     def upvote
-      current_elector.upvote! @votable
+      current_elector.vote_for! @votable
 
       respond_to do |format|
         format.html { redirect_to @votable.question?? @votable : @votable.question }
@@ -18,7 +18,16 @@ module Jqame
     end
 
     def downvote
-      current_elector.downvote! @votable
+      current_elector.vote_against! @votable
+
+      respond_to do |format|
+        format.html { redirect_to @votable.question?? @votable : @votable.question }
+        format.json { render json: @votable }
+      end
+    end
+
+    def destroy
+      current_elector.cancel_vote_for @votable
 
       respond_to do |format|
         format.html { redirect_to @votable.question?? @votable : @votable.question }

@@ -2,7 +2,9 @@ module Jqame
   class Question < ActiveRecord::Base
     include Jqame::Votable
 
-    @votable_type = :question
+    def self.votable_type
+      :question
+    end
 
     validates :body, :title, presence: true
     validates :title, uniqueness: { case_sensitive: false }

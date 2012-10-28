@@ -28,6 +28,11 @@ module Suffrage
     votes.on(votable).any?
   end
 
+  def can_vote? votable
+    # Currently we don't have any constraints, so everyone can vote ( except the votable owner )
+    not votable_author? votable
+  end
+
   def can_vote_for? votable
     not votable_author?(votable) and not voted_for?(votable)
   end
