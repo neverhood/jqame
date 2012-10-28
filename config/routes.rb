@@ -20,4 +20,6 @@ Jqame::Engine.routes.draw do
     delete :destroy, :on => :collection
   end
 
+  resources :favorited_questions, only: [ :index, :destroy, :create ]
+
 end

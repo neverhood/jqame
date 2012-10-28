@@ -85,6 +85,19 @@ module Suffrage
       select(date_predicate + " AS date").map { |record| Date.parse(record.date) }
   end
 
+  def add_to_favorites! question
+    return nil if favorited?(question)
+    favorited_questions.new(question_id: question.id).tap { |favorite| favorite.save }
+  end
+
+  def favorited? question
+    favorited_questions.where(question_id: question.id).any?
+  end
+
+  def favorited_question_entry(question)
+    Jqame::FavoritedQuestion.where(question_id: question.id).first
+  end
+
   def owns_suffrage? suffrage
     return false unless [ Jqame::Answer, Jqame::Comment, Jqame::Question ].include?(suffrage.class)
     suffrage.elector_id == id
@@ -98,6 +111,7 @@ module Suffrage
     base.has_many :answers, class_name: 'Jqame::Answer', foreign_key: 'elector_id', dependent: :destroy
     base.has_many :votes, class_name: 'Jqame::Vote', foreign_key: 'elector_id', dependent: :destroy
     base.has_many :comments, class_name: 'Jqame::Comment', foreign_key: 'elector_id', dependent: :destroy
+    base.has_many :favorited_questions, class_name: 'Jqame::FavoritedQuestion', foreign_key: 'elector_id', dependent: :destroy
   end
 
 end

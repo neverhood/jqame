@@ -1,0 +1,23 @@
+<div class='toggle-favorited'>
+
+  <div class='toggler-container'>
+    <%- if elector_signed_in? %>
+      <%- if current_elector.favorited?(@question) %>
+        <%= link_to jqame.favorited_question_path(current_elector.favorited_question_entry(@question)), method: 'delete', class: 'remove-from-favorites' do %>
+          <i class='icon-star'></i>
+        <% end %>
+      <% else %>
+        <%= link_to jqame.favorited_questions_path(question_id: @question.id), method: 'post', class: 'add-to-favorites' do %>
+          <i class='icon-star-empty'></i>
+        <% end %>
+      <% end %>
+    <%- else %>
+      <i class='icon-star-empty'></i>
+    <% end %>
+  </div>
+
+  <div class='times-favorited'>
+    <%= @question.times_favorited %>
+  </div>
+
+</div>

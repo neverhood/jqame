@@ -31,5 +31,9 @@ module Jqame
       answers.where(accepted: true).first
     end
 
+    def times_favorited
+      Jqame::FavoritedQuestion.where(question_id: id).count
+    end
+
   end
 end

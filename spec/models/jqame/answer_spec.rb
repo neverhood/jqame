@@ -8,7 +8,6 @@ describe Jqame::Answer do
     it 'verifies that answer has different body length depending on a type' do
       answer.should allow_value('Not too long for an answer').for(:body)
     end
-
   end
 
   describe 'Associations' do

@@ -1,0 +1,11 @@
+
+div.toggle-favorited {
+    a.add-to-favorites, a.remove-from-favorites {
+        text-decoration: none;
+        font-size: 20px;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}

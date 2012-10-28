@@ -14,6 +14,7 @@ describe 'Suffrage' do
       it { should have_many(:questions) }
       it { should have_many(:answers) }
       it { should have_many(:votes) }
+      it { should have_many(:favorited_questions) }
 
       it 'verifies that associated records are succesfully destroyed' do
         records = [

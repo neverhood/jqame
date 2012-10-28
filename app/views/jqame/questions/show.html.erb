@@ -1,4 +1,5 @@
 <div id='question'>
+
   <div class='title'>
     <h4> <%= link_to @question.title, jqame.question_path(@question) %> </h4>
   </div>
@@ -14,11 +15,11 @@
     </div>
   <% end %>
 
-  <div id='comments'>
-    <%= render partial: 'jqame/comments/comment', collection: @question.comments %>
-  </div>
+  <div id='comments'> <%= render @question.comments %> </div>
 
   <%= render 'suffrage', votable: @question %>
+  <%= render 'jqame/favorited_questions/toggler' %>
+
 </div>
 
 <div id='answers'>
