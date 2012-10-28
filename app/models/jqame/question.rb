@@ -23,5 +23,13 @@ module Jqame
       answers.new(options.merge({ elector_id: elector.id })).tap { |answer| answer.save }
     end
 
+    def has_accepted_answer?
+      answers.where(accepted: true).any?
+    end
+
+    def accepted_answer
+      answers.where(accepted: true).first
+    end
+
   end
 end

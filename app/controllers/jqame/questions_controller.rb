@@ -3,7 +3,7 @@ require_dependency "jqame/application_controller"
 module Jqame
   class QuestionsController < ApplicationController
 
-    respond_to :html
+    respond_to :html, :json
 
     before_filter :find_question!, only: [ :show, :edit, :update, :destroy, :answer ]
     before_filter :authenticate_elector!, only: [ :new, :create, :update, :edit, :destroy ]
@@ -44,11 +44,8 @@ module Jqame
       respond_with @question
     end
 
-    private
 
-    def require_question_owner!
-      render_permission_denied unless current_elector.owns_suffrage?(@question)
-    end
+    private
 
     def question_params
       params.require(:question).permit(:body, :title)

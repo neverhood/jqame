@@ -4,6 +4,23 @@ module Suffrage
   #
   extend self
 
+  # The #accept! and #unaccept! methods do not have any constaints since are only called from within constained controller actions
+  def accept! question, answer
+    return false if answer.accepted?
+
+    unaccept! question.accepted_answer if question.has_accepted_answer?
+
+    Jqame::SuffrageReputationLogic.answer_accepted! question, answer
+    answer.accept!
+  end
+
+  def unaccept! question, answer
+    return false unless answer.accepted?
+
+    Jqame::SuffrageReputationLogic.answer_unaccepted! question, answer
+    answer.unaccept!
+  end
+
   def vote_for votable
     votes.new(votable: votable)
   end
@@ -26,6 +43,11 @@ module Suffrage
 
   def voted_on? votable
     votes.on(votable).any?
+  end
+
+  def can_accept_answer? answer
+    # User should be an author of answered question
+    questions.where(id: answer.question_id).any?
   end
 
   def can_vote? votable

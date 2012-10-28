@@ -4,20 +4,25 @@
     <%# Upvote %>
 
     <%- if current_elector.can_vote_for?(votable) %>
-      <%= link_to t('.upvote'), upvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type), method: 'post' %>
+      <%= link_to t('.upvote'), upvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
+        method: 'post', class: 'upvote' %>
     <% else %>
-      <%= link_to t('.upvote'), upvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type), method: 'post', disabled: true %>
+      <%= link_to t('.upvote'), upvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
+        method: 'post', class: 'upvote', disabled: true %>
     <% end %>
 
     <%# Current Votable Rating %>
-    <%= link_to votable.current_rating, votables_path(votable_id: votable.id, votable_type: votable.class.votable_type), method: 'delete' %>
+    <%= link_to votable.current_rating, votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
+      method: 'delete', class: 'cancel-vote' %>
 
     <%# Downvote %>
 
     <%- if current_elector.can_vote_against?(votable) %>
-      <%= link_to t('.downvote'), downvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type), method: 'post' %>
+      <%= link_to t('.downvote'), downvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
+        method: 'post', class: 'downvote' %>
     <% else %>
-      <%= link_to t('.downvote'), downvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type), method: 'post', disabled: true %>
+      <%= link_to t('.downvote'), downvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
+        method: 'post', class: 'downvote', disabled: true %>
     <% end %>
 
   <%- else %>

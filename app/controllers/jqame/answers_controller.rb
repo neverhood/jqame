@@ -5,9 +5,10 @@ module Jqame
 
     respond_to :html
 
-    before_filter :find_answer!,          only: [ :edit, :update, :destroy ]
-    before_filter :authenticate_elector!, only: [ :create, :destroy, :update, :edit ]
-    before_filter :require_answer_owner!, only: [ :destroy, :edit, :update ]
+    before_filter :find_answer!,            only: [ :edit, :update, :destroy, :accept, :unaccept ]
+    before_filter :authenticate_elector!,   only: [ :create, :destroy, :update, :edit, :accept, :unaccept ]
+    before_filter :require_answer_owner!,   only: [ :destroy, :edit, :update ]
+    before_filter(only: [ :accept, :unaccept ]) { |controller| controller.require_question_owner!(@question = @answer.question) }
 
     def edit
     end
@@ -28,11 +29,17 @@ module Jqame
       end
     end
 
-    private
-
-    def require_answer_owner!
-      render_permission_denied unless current_elector.owns_suffrage?(@answer)
+    def accept
+      current_elector.accept! @question, @answer
+      respond_with @question
     end
+
+    def unaccept
+      current_elector.unaccept! @question, @answer
+      respond_with @question
+    end
+
+    private
 
     def answer_params
       params.require(:answer).permit(:body)

@@ -1,13 +1,19 @@
 module Jqame
   class Vote < ActiveRecord::Base
     class << self
-      attr_accessor :rates
+      attr_accessor :rates, :action_author_rates
     end
 
     # Amount of reputation to be granted/withdrawn for an elector upon upvote/downvote of his question or answer
     @rates = {
       question: { upvote: 5 , downvote: -3 },
-      answer:   { upvote: 10, downvote: -5 }
+      answer:   { upvote: 10, downvote: -5, accept: 15 }
+    }
+
+    # When user 'A' downvotes votable or accepts an answer, his reputation will be amended using below rates
+    @action_author_rates = {
+      downvote: -2,
+      accept: 2
     }
 
     # Returns a collection of votes that affected #elector reputation

@@ -6,7 +6,11 @@ Jqame::Engine.routes.draw do
     post :answer, :on => :member # creates new answer
   end
 
-  resources :answers, except: [ :index, :new, :show, :create ]
+  resources :answers, except: [ :index, :new, :show, :create ] do
+    post :accept, :on => :member # accepts answer
+    post :unaccept, :on => :member # unaccepts answer
+  end
+
   resources :comments, only: [ :destroy ]
 
   resources :votables, only: [] do

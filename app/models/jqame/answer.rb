@@ -14,5 +14,18 @@ module Jqame
     scope :top, -> count = 5 { limit(count).order("'jqame_answers'.'current_rating' DESC") }
 
     validates :body, length: { within: (1..50000) }
+
+    def accept!
+      return false if accepted?
+
+      update_attirubtes(accepted: true)
+    end
+
+    def unaccept!
+      return false unless accepted?
+
+      update_attirubtes(accepted: true)
+    end
+
   end
 end
