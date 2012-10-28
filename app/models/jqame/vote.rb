@@ -7,7 +7,7 @@ module Jqame
     # Amount of reputation to be granted/withdrawn for an elector upon upvote/downvote of his question or answer
     @rates = {
       question: { upvote: 5 , downvote: -3 },
-      answer:   { upvote: 10, downvote: -5, accept: 15 }
+      answer:   { upvote: 10, downvote: -5 }
     }
 
     # When user 'A' downvotes votable or accepts an answer, his reputation will be amended using below rates

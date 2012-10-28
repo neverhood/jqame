@@ -18,13 +18,13 @@ module Jqame
     def accept!
       return false if accepted?
 
-      update_attirubtes(accepted: true)
+      update_attributes(accepted: true)
     end
 
     def unaccept!
       return false unless accepted?
 
-      update_attirubtes(accepted: true)
+      update_attributes(accepted: false)
     end
 
   end

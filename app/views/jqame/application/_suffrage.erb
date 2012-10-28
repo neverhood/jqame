@@ -25,6 +25,14 @@
         method: 'post', class: 'downvote', disabled: true %>
     <% end %>
 
+    <%- if current_elector.owns_suffrage?(@question) and votable.is_a?(Jqame::Answer) %>
+      <%- if votable.accepted? %>
+        <%= link_to t('.unaccept'), unaccept_answer_path(votable), method: 'post', class: 'unaccept-answer' %>
+      <%- else %>
+        <%= link_to t('.accept'), accept_answer_path(votable), method: 'post', class: 'accept-answer' %>
+      <%- end %>
+    <% end %>
+
   <%- else %>
     <%# Current Votable Rating %>
     <%= votable.current_rating %>

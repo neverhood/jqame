@@ -38,8 +38,9 @@ ActiveRecord::Schema.define(:version => 20121028101913) do
     t.integer  "current_rating", :limit => 2, :default => 0
     t.integer  "question_id"
     t.integer  "elector_id"
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.boolean  "accepted",                    :default => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
   end
 
   create_table "jqame_comments", :force => true do |t|
