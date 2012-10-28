@@ -1,5 +1,19 @@
 <div id='question-<%= question.id %>' class='question-index-entry'>
 
+  <div class='question-stats'>
+    <div class='question-rating'>
+      <strong class=''> <%= t '.rating' %> </strong> <span> <%= question.current_rating %> </span>
+    </div>
+
+    <div class='question-answers-count'>
+      <strong class=''> <%= t '.answers_count' %> </strong> <span> <%= question.answers.count %> </span>
+    </div>
+
+    <div class='question-views-count'>
+      <strong class=''> <%= t '.views_count' %> </strong> <span> <%= question.question_views.count %> </span>
+    </div>
+  </div>
+
   <div class='question-contents'>
     <div class='title'>
       <%= link_to question.title, jqame.question_path(question) %>

@@ -27,6 +27,10 @@ ru:
         edit: 'Редактировать'
       new:
         header: 'Новый вопрос'
+      question:
+        rating: 'Рейтинг'
+        answers_count: 'Ответов'
+        views_count: 'Просмотров'
 
     answers:
       answer:
