@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Jqame::Vote do
 
+  vote_rates = Jqame::SuffrageReputationLogic.vote_rates
+
   describe 'Associations' do
     let(:vote) { FactoryGirl.create(:jqame_vote) }
     let(:answer_vote) { FactoryGirl.create(:jqame_vote_on_answer) }
@@ -33,8 +35,8 @@ describe Jqame::Vote do
     end
 
     it 'verifies that #reputation_value returns an expected value' do
-      downvote.reputation_value.should == described_class.rates[:question][:downvote]
-      vote.reputation_value.should     == described_class.rates[:question][:upvote]
+      downvote.reputation_value.should == vote_rates[:question][:downvote]
+      vote.reputation_value.should     == vote_rates[:question][:upvote]
     end
 
     describe 'Class methods' do
@@ -104,17 +106,17 @@ describe Jqame::Vote do
       author.reputation.should be_zero
 
       @elector.vote_for! @question
-      author.reload.reputation.should == described_class.rates[:question][:upvote]
+      author.reload.reputation.should == vote_rates[:question][:upvote]
 
       @elector.vote_against! @question
-      author.reload.reputation.should == described_class.rates[:question][:downvote]
+      author.reload.reputation.should == vote_rates[:question][:downvote]
 
       elector_b = FactoryGirl.create(:elector)
       elector_b.vote_for! @question
-      author.reload.reputation.should == ( described_class.rates[:question][:downvote] + described_class.rates[:question][:upvote] )
+      author.reload.reputation.should == ( vote_rates[:question][:downvote] + vote_rates[:question][:upvote] )
 
       elector_b.vote_against! @question
-      author.reload.reputation.should == ( described_class.rates[:question][:downvote] * 2 )
+      author.reload.reputation.should == ( vote_rates[:question][:downvote] * 2 )
     end
   end
 

@@ -23,6 +23,14 @@ module Jqame::SuffrageReputationLogic
     _amend_electors_reputation_upon_answer_accept( answer.elector, question.elector, false )
   end
 
+  def self.vote_created! vote
+    _amend_electors_reputation_upon_vote(vote)
+  end
+
+  def self.vote_destroyed! vote
+    _amend_electors_reputation_upon_vote(vote, false)
+  end
+
   private
 
   # Unless elector accepted his own question, reputation of both question and answer owners will be amended
@@ -34,6 +42,13 @@ module Jqame::SuffrageReputationLogic
       answer_owner.increment!(:reputation, answer_owner_reputation_modifier)
       question_owner.increment!(:reputation, question_owner_reputation_modifier)
     end
+  end
+
+  def _amend_electors_reputation_upon_vote vote, created = true
+    votable = vote.votable
+    modifier = created ? vote_rates[votable.class.votable_type][vote.kind] : -vote_rates[votable.class.votable_type][vote.kind]
+
+    votable.elector.increment!(:reputation, modifier)
   end
 
 end

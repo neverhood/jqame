@@ -4,18 +4,6 @@ module Jqame
       attr_accessor :rates, :action_author_rates
     end
 
-    # Amount of reputation to be granted/withdrawn for an elector upon upvote/downvote of his question or answer
-    @rates = {
-      question: { upvote: 5 , downvote: -3 },
-      answer:   { upvote: 10, downvote: -5 }
-    }
-
-    # When user 'A' downvotes votable or accepts an answer, his reputation will be amended using below rates
-    @action_author_rates = {
-      downvote: -2,
-      accept: 2
-    }
-
     # Returns a collection of votes that affected #elector reputation
     #def self.affecting_votables_of elector, records_limit = 5
       #votes, questions, answers = [ Jqame::Vote, Jqame::Question, Jqame::Answer ].map(&:arel_table)
@@ -55,13 +43,10 @@ module Jqame
     validates :elector_id, uniqueness: { scope: [ :votable_id, :votable_type, :upvote ] }
 
     # Callbacks
-    # Votable
-    before_create  :update_votable_rating_before_create
-    before_destroy :update_votable_rating_before_destroy
-    # elector
-    before_create  :update_elector_reputation_before_create
-    before_destroy :update_elector_reputation_before_destroy
+    before_create :increment_requirements
+    before_destroy :decrement_requirements
 
+    # Methods
     def votable= votable
       tap do |vote|
         vote.votable_id = votable.id
@@ -78,29 +63,19 @@ module Jqame
     end
 
     def reputation_value
-      self.class.rates[ votable_type.sub('Jqame::', '').underscore.to_sym ][ kind ]
+      Jqame::SuffrageReputationLogic.vote_rates[ votable_type.sub('Jqame::', '').underscore.to_sym ][kind]
     end
 
     private
 
-    def update_votable_rating_before_create
+    def increment_requirements
       votable.increment!(:current_rating, ( upvote?? 1 : -1 ))
+      Jqame::SuffrageReputationLogic.vote_created! self
     end
 
-    def update_votable_rating_before_destroy
+    def decrement_requirements
       votable.increment!(:current_rating, ( upvote?? -1 : 1 ))
-    end
-
-    def update_elector_reputation_before_create
-      modifier = Vote.rates[votable.class.votable_type][kind]
-
-      votable.elector.increment!(:reputation, modifier)
-    end
-
-    def update_elector_reputation_before_destroy
-      modifier = Vote.rates[votable.class.votable_type][kind]
-
-      votable.elector.increment!(:reputation, - modifier)
+      Jqame::SuffrageReputationLogic.vote_destroyed! self
     end
 
     def self.outer_join_votable_predicates(votables)
