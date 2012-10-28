@@ -4,7 +4,7 @@ body#jqame-questions {
         display: none;
     }
 
-    %question-entry-side-note {
+    .question-index-entry-side-note {
         strong {
             @extend .label, .label-info;
 
@@ -38,7 +38,7 @@ body#jqame-questions {
             padding-right: 10px;
 
             div.question-rating, div.question-answers-count, div.question-views-count {
-                @extend %question-entry-side-note;
+                @extend .question-index-entry-side-note;
             }
         }
 
