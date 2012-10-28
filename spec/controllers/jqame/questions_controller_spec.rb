@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Jqame::QuestionsController do
+  include Devise::TestHelpers
 
   describe '#find_question! before filter' do
     describe 'Given a valid question id' do

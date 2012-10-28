@@ -5,6 +5,7 @@ class CreateJqameAnswers < ActiveRecord::Migration
       t.integer :current_rating, default: 0, limit: 2
       t.integer :question_id
       t.integer :elector_id
+      t.boolean :accepted, default: false
 
       t.timestamps
     end
