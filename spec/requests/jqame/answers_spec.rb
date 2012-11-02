@@ -73,11 +73,5 @@ describe 'Answers' do
 
       page.should_not have_css('form#new-answer')
     end
-
-    it 'ensures unsigned elector can`t edit answers' do
-      visit jqame.edit_answer_path(@answer)
-
-      current_path.should == send(:"new_#{Jqame.elector_string}_session_path")
-    end
   end
 end
