@@ -2,12 +2,7 @@ module Jqame::SuffrageReputationLogic
 
   extend self
 
-  mattr_accessor :vote_rates, :action_rates
-
-  @@vote_rates = {
-    question: { upvote: 5 , downvote: -3 },
-    answer:   { upvote: 10, downvote: -5 }
-  }
+  mattr_accessor :action_rates
 
   @@action_rates = {
     downvote: -2,
@@ -45,10 +40,7 @@ module Jqame::SuffrageReputationLogic
   end
 
   def _amend_electors_reputation_upon_vote vote, created = true
-    votable = vote.votable
-    modifier = created ? vote_rates[votable.class.votable_type][vote.kind] : -vote_rates[votable.class.votable_type][vote.kind]
-
-    votable.elector.increment!(:reputation, modifier)
+    vote.votable.elector.increment!(:reputation, Jqame::VoteRate.new(vote, created).rate)
   end
 
 end

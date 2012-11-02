@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Jqame::Vote do
 
-  vote_rates = Jqame::SuffrageReputationLogic.vote_rates
+  vote_rates = Jqame::VoteRate::RATES
 
   describe 'Associations' do
     let(:vote) { FactoryGirl.create(:jqame_vote) }

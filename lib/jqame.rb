@@ -1,5 +1,7 @@
 require "jqame/engine"
+
 require "jqame/suffrage_reputation_logic"
+require "jqame/vote_rate"
 
 module Jqame
   mattr_accessor :elector_class, :current_elector
@@ -15,5 +17,4 @@ module Jqame
   def self.elector_string
     @@elector_class.underscore
   end
-
 end

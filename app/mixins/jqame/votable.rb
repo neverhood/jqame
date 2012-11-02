@@ -23,6 +23,18 @@ module Jqame::Votable
     self.is_a? Jqame::Question
   end
 
+  def upvoted!
+    increment!(:current_rating, 1)
+  end
+
+  def downvoted!
+    increment!(:current_rating, -1)
+  end
+
+  def vote_destroyed! vote
+    increment!(:current_rating, ( vote.upvote ? -1 : 1 ))
+  end
+
   module ClassMethods
   end
 

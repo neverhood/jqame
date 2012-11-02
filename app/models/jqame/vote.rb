@@ -1,8 +1,5 @@
 module Jqame
   class Vote < ActiveRecord::Base
-    class << self
-      attr_accessor :rates, :action_author_rates
-    end
 
     # Returns a collection of votes that affected #elector reputation
     #def self.affecting_votables_of elector, records_limit = 5
@@ -15,9 +12,6 @@ module Jqame
         #order(votes[:created_at].desc).
         #take(records_limit).to_sql )
     #end
-
-    def self.affecting_votables_of elector, limit = 5
-    end
 
     # Associations
     belongs_to :votable, polymorphic: true
@@ -63,18 +57,18 @@ module Jqame
     end
 
     def reputation_value
-      Jqame::SuffrageReputationLogic.vote_rates[ votable_type.sub('Jqame::', '').underscore.to_sym ][kind]
+      Jqame::VoteRate.new(self, true).rate
     end
 
     private
 
     def increment_requirements
-      votable.increment!(:current_rating, ( upvote?? 1 : -1 ))
+      upvote ? votable.upvoted! : votable.downvoted!
       Jqame::SuffrageReputationLogic.vote_created! self
     end
 
     def decrement_requirements
-      votable.increment!(:current_rating, ( upvote?? -1 : 1 ))
+      votable.vote_destroyed!(self)
       Jqame::SuffrageReputationLogic.vote_destroyed! self
     end
 
