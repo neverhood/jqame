@@ -9,7 +9,7 @@ module Jqame
     before_filter :find_votable!
 
     def upvote
-      current_elector.vote_for! @votable
+      current_elector.vote_for! @votable if current_elector.can_vote?(@votable)
 
       respond_to do |format|
         format.html { redirect_to @votable.question?? @votable : @votable.question }
@@ -18,7 +18,7 @@ module Jqame
     end
 
     def downvote
-      current_elector.vote_against! @votable
+      current_elector.vote_against!(@votable) if current_elector.can_vote?(@votable)
 
       respond_to do |format|
         format.html { redirect_to @votable.question?? @votable : @votable.question }

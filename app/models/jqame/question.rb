@@ -14,6 +14,7 @@ module Jqame
     has_many :comments, :dependent => :destroy, :as => :votable
     has_many :votes, :dependent => :destroy, :as => :votable
     has_many :question_views, :dependent => :destroy
+    has_many :reputation_points, :dependent => :destroy
     belongs_to :elector, class_name: Jqame.elector_class
 
     scope :top, -> count = 5 { limit(count).order("'jqame_questions'.'current_rating' DESC") }

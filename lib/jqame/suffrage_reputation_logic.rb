@@ -2,45 +2,60 @@ module Jqame::SuffrageReputationLogic
 
   extend self
 
-  mattr_accessor :action_rates
-
-  @@action_rates = {
-    downvote: -2,
-    accept: 2,
-    accepted: 15
-  }
-
   def self.answer_accepted! question, answer
-    _amend_electors_reputation_upon_answer_accept( answer.elector, question.elector )
+    _answer_accepted!(question, answer)
   end
 
   def self.answer_unaccepted! question, answer
-    _amend_electors_reputation_upon_answer_accept( answer.elector, question.elector, false )
+    _answer_unaccepted!(question, answer)
   end
 
   def self.vote_created! vote
-    _amend_electors_reputation_upon_vote(vote)
-  end
-
-  def self.vote_destroyed! vote
-    _amend_electors_reputation_upon_vote(vote, false)
+    _downvoted!(vote) if vote.downvote?
+    _store_vote! vote
   end
 
   private
 
-  # Unless elector accepted his own question, reputation of both question and answer owners will be amended
-  def _amend_electors_reputation_upon_answer_accept(answer_owner, question_owner, accepted = true)
-    if answer_owner.id != question_owner.id
-      answer_owner_reputation_modifier = accepted ? action_rates[:accepted] : -action_rates[:accepted]
-      question_owner_reputation_modifier = accepted ? action_rates[:accept] : -action_rates[:accept]
+  def _answer_unaccepted!(question, answer)
+    return if question.elector_id == answer.elector_id # unaccepted own answer
 
-      answer_owner.increment!(:reputation, answer_owner_reputation_modifier)
-      question_owner.increment!(:reputation, question_owner_reputation_modifier)
-    end
+    Jqame::ReputationPoint.where(elector_id: answer.elector_id,
+                                 question_id: answer.question_id,
+                                 action: Jqame::ReputationPoint::ACTIONS[:accepted]).destroy_all
+
+    Jqame::ReputationPoint.where(elector_id: question.elector_id,
+                                 question_id: question.id,
+                                 action: Jqame::ReputationPoint::ACTIONS[:accept]).destroy_all
   end
 
-  def _amend_electors_reputation_upon_vote vote, created = true
-    vote.votable.elector.increment!(:reputation, Jqame::VoteRate.new(vote, created).rate)
+  # When answer is accepted both question owner and answer owner are given some reputation
+  def _answer_accepted!(question, answer)
+    return if question.elector_id == answer.elector_id # accepted own answer
+
+    Jqame::ReputationPoint.create(elector_id: answer.elector_id,
+                                  question_id: answer.question_id,
+                                  action: Jqame::ReputationPoint::ACTIONS[:accepted])
+
+    Jqame::ReputationPoint.create(elector_id: question.elector_id,
+                                  question_id: question.id,
+                                  action: Jqame::ReputationPoint::ACTIONS[:accept])
+  end
+
+  def _store_vote! vote, created = true
+    # Owner of votable will be granted/withdrawn some reputation upon new vote ( depending on vote kind )
+    vote.reputation_points.create(question_id: vote.question_id,
+                                  elector_id: vote.votable.elector_id,
+                                  reputation_amount: Jqame::VoteRate.new(vote).rate,
+                                  action: vote.kind
+                                 )
+  end
+
+  # When user downvotes something, some reputation will be withdrawn
+  def _downvoted! vote
+    Jqame::ReputationPoint.create(question_id: vote.question_id,
+                                  elector_id: vote.elector_id,
+                                  action: Jqame::ReputationPoint::ACTIONS[:downvoted])
   end
 
 end

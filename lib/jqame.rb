@@ -2,6 +2,7 @@ require "jqame/engine"
 
 require "jqame/suffrage_reputation_logic"
 require "jqame/vote_rate"
+require "jqame/action_rate"
 
 module Jqame
   mattr_accessor :elector_class, :current_elector

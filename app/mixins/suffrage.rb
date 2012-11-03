@@ -112,6 +112,7 @@ module Suffrage
     base.has_many :votes, class_name: 'Jqame::Vote', foreign_key: 'elector_id', dependent: :destroy
     base.has_many :comments, class_name: 'Jqame::Comment', foreign_key: 'elector_id', dependent: :destroy
     base.has_many :favorited_questions, class_name: 'Jqame::FavoritedQuestion', foreign_key: 'elector_id', dependent: :destroy
+    base.has_many :reputation_points, class_name: 'Jqame::ReputationPoint', foreign_key: 'elector_id', dependent: :destroy
   end
 
 end

@@ -17,7 +17,7 @@ module Jqame
     belongs_to :votable, polymorphic: true
     belongs_to :elector, class_name: Jqame.elector_class
 
-    attr_accessible :votable, :upvote
+    has_many :reputation_points, :dependent => :destroy
 
     # Scopes
     scope :on,     -> votable { where(votable_id: votable.id, votable_type: votable.class.model_name) }
@@ -37,8 +37,8 @@ module Jqame
     validates :elector_id, uniqueness: { scope: [ :votable_id, :votable_type, :upvote ] }
 
     # Callbacks
-    before_create :increment_requirements
-    before_destroy :decrement_requirements
+    after_create :increment_requirements
+    after_destroy :decrement_requirements
 
     # Methods
     def votable= votable
@@ -57,7 +57,15 @@ module Jqame
     end
 
     def reputation_value
-      Jqame::VoteRate.new(self, true).rate
+      Jqame::VoteRate.new(self).rate
+    end
+
+    def question_id
+      if votable_type == Jqame::Answer.to_s
+        votable.question_id
+      else
+        votable_id
+      end
     end
 
     private
@@ -69,7 +77,6 @@ module Jqame
 
     def decrement_requirements
       votable.vote_destroyed!(self)
-      Jqame::SuffrageReputationLogic.vote_destroyed! self
     end
 
     def self.outer_join_votable_predicates(votables)
