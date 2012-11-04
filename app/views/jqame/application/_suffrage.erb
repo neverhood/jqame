@@ -3,32 +3,40 @@
 
   <div class='upvote'>
     <%= link_to upvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
-      method: 'post', remote: true, class: 'upvote',
-      data: { votable: (elector_signed_in? and current_elector.can_vote?(votable)) } do %>
-      <i class='icon-chevron-up'></i>
+      method: 'post', remote: true, class: 'upvote', title: t('.upvote'),
+      data: { allowed: current_elector.can_vote_for?(votable) } do %>
+      <i class='icon-chevron-up <%= current_elector.voted_for?(votable) ? "active" : "" %>'></i>
     <% end %>
   </div>
 
+  <hr class='horizontal-separator' />
+
   <%# Current Votable Rating %>
-  <div class='current-rating'>
-    <%- if elector_signed_in? and current_elector.can_vote?(votable) %>
-      <%= link_to votable.current_rating, votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
-                            method: 'delete', remote: true, class: 'cancel-vote' %>
-    <% else %>
-      <%= votable.current_rating %>
+  <div class='stats'>
+    <%= link_to votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
+      method: 'delete', remote: true, class: "cancel-vote #{current_elector.voted?(votable) ? '' : 'hidden'}",
+      title: t('.cancel_vote'), data: { allowed: true } do %>
+      <i class='icon-remove'></i>
     <% end %>
+
+    <span class='current-rating-value'> <%= votable.current_rating %> </span>
   </div>
+
+  <hr class='horizontal-separator' />
 
   <%# Downvote %>
   <div class='downvote'>
     <%= link_to downvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
-      method: 'post', remote: true, class: 'downvote',
-      data: { votable: (elector_signed_in? and current_elector.can_vote?(votable)) } do %>
-      <i class='icon-chevron-down'></i>
+      method: 'post', remote: true, class: 'downvote', title: t('.downvote'),
+      data: { allowed: current_elector.can_vote_against?(votable) } do %>
+      <i class='icon-chevron-down <%= current_elector.voted_against?(votable) ? "active" : "" %>'></i>
     <% end %>
   </div>
 
   <hr />
 
-  <%= render 'jqame/favorited_questions/toggler' if votable.is_a?(Jqame::Question) %>
+  <%- if votable.is_a?(Jqame::Question) %>
+    <%= render 'jqame/favorited_questions/toggler' if votable.is_a?(Jqame::Question) %>
+  <%- elsif votable.is_a?(Jqame::Answer) %>
+  <% end %>
 </div>

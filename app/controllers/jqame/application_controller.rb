@@ -35,7 +35,7 @@ module Jqame
     end
 
     def current_elector
-      send(:"current_#{Jqame.elector_string}")
+      @current_elector ||= ( elector_signed_in?? send(:"current_#{Jqame.elector_string}") : Jqame::NilElector.new )
     end
 
     private

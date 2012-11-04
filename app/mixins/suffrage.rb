@@ -67,6 +67,10 @@ module Suffrage
     votable.elector_id == id
   end
 
+  def voted?(votable)
+    votes.on(votable).any?
+  end
+
   def voted_for? votable
     votes.on(votable).where(upvote: true).any?
   end

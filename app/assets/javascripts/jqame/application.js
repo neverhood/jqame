@@ -16,6 +16,7 @@
 //= require jqame/api
 //
 //= require jqame/questions
+//= require jqame/suffrage
 //= require jqame/answers
 //= require jqame/comments
 //

@@ -1,6 +1,17 @@
+hr.horizontal-separator {
+    margin: 5px 0;
+}
+
 .common-border {
     border: 1px solid #DDD;
 }
 
 .form-container {
+}
+
+%link-textified {
+    text-decoration: none;
+    &:hover {
+        text-decoration: none;
+    }
 }

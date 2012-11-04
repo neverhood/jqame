@@ -15,8 +15,9 @@ if ( document.body.id == 'jqame-questions' ) {
         $.api.questions.init();
 
         if ( $.api.action == 'show' ) {
-            $.api.answers.questionShow.init();
-            $.api.comments.questionShow.init();
+            $.api.suffrage.init(); // Voting
+            $.api.answers.questionShow.init(); // Answers related
+            $.api.comments.questionShow.init(); // Comments related
         }
     });
 

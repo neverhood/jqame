@@ -16,6 +16,7 @@ ru:
         downvote: 'Против'
         accept: 'Принять'
         unaccept: 'Отменить'
+        cancel_vote: 'Отменить голос'
 
     # Controllers
     questions:

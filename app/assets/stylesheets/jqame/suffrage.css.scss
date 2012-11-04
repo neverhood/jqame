@@ -4,21 +4,42 @@ div.suffrage {
     width: 50px;
     text-align: center;
 
-    div.current-rating {
-        font-size: 20px;
+    div.stats {
+        span.current-rating-value {
+            font-size: 20px;
+            color: $grayLight;
+        }
+
+        a {
+            @extend %link-textified;
+
+            color: $btnDangerBackground;
+            float: left;
+            margin-left: -20px;
+
+            &:hover {
+                color: $red;
+            }
+
+            i { font-size: 12px; }
+        }
     }
 
     div.upvote, div.downvote {
         a {
-            text-decoration: none;
-            &:hover {
-                text-decoration: none;
-            }
+            @extend %link-textified;
 
             i {
+                color: $grayLight;
                 cursor: pointer;
                 font-size: 30px;
 
+                &:hover {
+                    color: $linkColorHover;
+                }
+            }
+
+            i.active {
                 color: $linkColor;
             }
         }

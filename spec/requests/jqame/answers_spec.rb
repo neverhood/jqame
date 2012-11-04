@@ -27,7 +27,7 @@ describe 'Answers' do
       new_answer_body = answer.body + ' NEW '
       visit jqame.question_path(question)
 
-      within "div#answer-#{answer.id}" do
+      within "div.answer[data-votable-id='#{answer.id}']" do
         click_link I18n.t('jqame.answers.answer.edit')
       end
 
@@ -41,7 +41,7 @@ describe 'Answers' do
       answer.save
       visit jqame.question_path(question)
 
-      within "div#answer-#{answer.id}" do
+      within "div.answer[data-votable-id='#{answer.id}']" do
         click_link I18n.t('jqame.answers.answer.destroy')
       end
 
@@ -49,10 +49,10 @@ describe 'Answers' do
       page.should_not have_content(answer.body)
     end
 
-    it 'ensures question owner can  accept an answer' do
+    it 'ensures question owner can accept an answer' do
       visit jqame.question_path(question)
 
-      within "div#answer-#{@answer.id} div.suffrage" do
+      within "div.answer[data-votable-id='#{@answer.id}'] div.suffrage" do
         find('.accept-answer').click
         question.should have_accepted_answer
       end
