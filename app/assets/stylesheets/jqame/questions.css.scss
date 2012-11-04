@@ -1,5 +1,24 @@
 body#jqame-questions {
 
+    /* Show */
+    div.question {
+        div.contents, div.comments {
+            margin-left: 70px;
+        }
+
+        ul.options {
+            list-style: none;
+            display: inline-block;
+
+            li { display: inline; }
+        }
+
+        div.body {
+            @extend .well;
+            margin-bottom: 10px;
+        }
+    }
+
     div#comment-form-container {
         display: none;
     }

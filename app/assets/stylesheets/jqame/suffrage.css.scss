@@ -1,0 +1,26 @@
+div.suffrage {
+    @extend .pull-left;
+
+    width: 50px;
+    text-align: center;
+
+    div.current-rating {
+        font-size: 20px;
+    }
+
+    div.upvote, div.downvote {
+        a {
+            text-decoration: none;
+            &:hover {
+                text-decoration: none;
+            }
+
+            i {
+                cursor: pointer;
+                font-size: 30px;
+
+                color: $linkColor;
+            }
+        }
+    }
+}

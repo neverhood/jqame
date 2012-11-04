@@ -1,40 +1,34 @@
 <div class='suffrage'>
-  <%- if elector_signed_in? and current_elector.can_vote?(votable) %>
+  <%# Upvote %>
 
-    <%# Upvote %>
+  <div class='upvote'>
+    <%= link_to upvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
+      method: 'post', remote: true, class: 'upvote',
+      data: { votable: (elector_signed_in? and current_elector.can_vote?(votable)) } do %>
+      <i class='icon-chevron-up'></i>
+    <% end %>
+  </div>
 
-    <%- if current_elector.can_vote_for?(votable) %>
-      <%= link_to t('.upvote'), upvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
-        method: 'post', class: 'upvote' %>
+  <%# Current Votable Rating %>
+  <div class='current-rating'>
+    <%- if elector_signed_in? and current_elector.can_vote?(votable) %>
+      <%= link_to votable.current_rating, votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
+                            method: 'delete', remote: true, class: 'cancel-vote' %>
     <% else %>
-      <%= link_to t('.upvote'), upvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
-        method: 'post', class: 'upvote', disabled: true %>
+      <%= votable.current_rating %>
     <% end %>
+  </div>
 
-    <%# Current Votable Rating %>
-    <%= link_to votable.current_rating, votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
-      method: 'delete', class: 'cancel-vote' %>
-
-    <%# Downvote %>
-
-    <%- if current_elector.can_vote_against?(votable) %>
-      <%= link_to t('.downvote'), downvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
-        method: 'post', class: 'downvote' %>
-    <% else %>
-      <%= link_to t('.downvote'), downvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
-        method: 'post', class: 'downvote', disabled: true %>
+  <%# Downvote %>
+  <div class='downvote'>
+    <%= link_to downvote_votables_path(votable_id: votable.id, votable_type: votable.class.votable_type),
+      method: 'post', remote: true, class: 'downvote',
+      data: { votable: (elector_signed_in? and current_elector.can_vote?(votable)) } do %>
+      <i class='icon-chevron-down'></i>
     <% end %>
+  </div>
 
-    <%- if current_elector.owns_suffrage?(@question) and votable.is_a?(Jqame::Answer) %>
-      <%- if votable.accepted? %>
-        <%= link_to t('.unaccept'), unaccept_answer_path(votable), method: 'post', class: 'unaccept-answer' %>
-      <%- else %>
-        <%= link_to t('.accept'), accept_answer_path(votable), method: 'post', class: 'accept-answer' %>
-      <%- end %>
-    <% end %>
+  <hr />
 
-  <%- else %>
-    <%# Current Votable Rating %>
-    <%= votable.current_rating %>
-  <% end %>
+  <%= render 'jqame/favorited_questions/toggler' if votable.is_a?(Jqame::Question) %>
 </div>

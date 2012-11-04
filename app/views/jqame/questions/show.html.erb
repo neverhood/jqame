@@ -1,24 +1,37 @@
-<div id='question'>
+<div class='question' data-votable-id='<%= @question.id %>'>
 
-  <div class='title'>
-    <h4> <%= link_to @question.title, jqame.question_path(@question) %> </h4>
-  </div>
+  <%= render 'suffrage', votable: @question %>
 
-  <div class='body well'>
-    <%= @question.body %>
+  <div class='contents'>
+    <div class='title'>
+      <h4> <%= link_to @question.title, jqame.question_path(@question) %> </h4>
+    </div>
+
+    <div class='body'>
+      <%= @question.body %>
+    </div>
   </div>
 
   <%- if elector_signed_in? and current_elector.owns_suffrage?(@question) %>
-    <div class='options'>
-      <%= link_to t('.destroy'), jqame.question_path(@question), method: 'delete', data: { confirm: t('jqame.common.are_you_sure?') } %>
+    <ul class='options'>
+      <li> <i class='icon-pencil'></i>
       <%= link_to t('.edit'), jqame.edit_question_path(@question) %>
-    </div>
+      </li>
+
+      <li> <i class='icon-trash'></i>
+      <%= link_to t('.destroy'), jqame.question_path(@question), method: 'delete', data: { confirm: t('jqame.common.are_you_sure?') } %>
+      </li>
+    </ul>
   <% end %>
+
+  <div class="pull-right">
+    <%= @question.elector.email %>
+  </div>
 
   <div id='comments'> <%= render @question.comments %> </div>
 
-  <%= render 'suffrage', votable: @question %>
-  <%= render 'jqame/favorited_questions/toggler' %>
+  <div class='comment-form-placeholder'>
+  </div>
 
 </div>
 

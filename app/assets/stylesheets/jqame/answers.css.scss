@@ -1,4 +1,20 @@
-/*
-  Place all the styles related to the matching controller here.
-  They will automatically be included in application.css.
-*/
+div.answer {
+
+    div.contents, div.comments {
+        margin-left: 70px;
+    }
+
+    ul.options {
+        list-style: none;
+        display: inline-block;
+
+        li { display: inline; }
+    }
+
+    div.body {
+        @extend .well;
+        margin-bottom: 10px;
+    }
+
+
+}

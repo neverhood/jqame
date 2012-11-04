@@ -1,19 +1,31 @@
-<div id='answer-<%= answer.id %>' class='answer'>
-  <div class='body'>
-    <%= answer.body %>
+<div class='answer' data-votable-id='<%= answer.id %>'>
+  <%= render 'suffrage', votable: answer %>
+
+  <div class='contents'>
+    <div class='body'> <%= answer.body %> </div>
   </div>
 
   <%- if elector_signed_in? and current_elector.owns_suffrage?(answer) %>
-    <div class='options'>
-      <%= link_to t('.edit'), edit_answer_path(answer) %>
-      <%= link_to t('.destroy'), answer_path(answer), method: 'delete', data: { confirm: t('jqame.common.are_you_sure?') } %>
-    </div>
+    <ul class='options'>
+      <li> <i class='icon-pencil'></i>
+      <%= link_to t('.edit'), jqame.edit_answer_path(answer) %>
+      </li>
+
+      <li> <i class='icon-trash'></i>
+      <%= link_to t('.destroy'), jqame.answer_path(answer), method: 'delete', data: { confirm: t('jqame.common.are_you_sure?') } %>
+      </li>
+    </ul>
   <% end %>
+
+  <div class="pull-right">
+    <%= answer.elector.email %>
+  </div>
+
+  <div id='comments'> <%= render @question.comments %> </div>
 
   <div class='comment-form-placeholder'>
   </div>
 
-  <%= render 'suffrage', votable: answer %>
 </div>
 
 <hr />
