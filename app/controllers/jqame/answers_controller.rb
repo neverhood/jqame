@@ -3,7 +3,7 @@ require_dependency "jqame/application_controller"
 module Jqame
   class AnswersController < ApplicationController
 
-    respond_to :html
+    respond_to :html, :json
 
     before_filter :find_answer!,            only: [ :edit, :update, :destroy, :accept, :unaccept ]
     before_filter :authenticate_elector!,   only: [ :create, :destroy, :update, :edit, :accept, :unaccept ]

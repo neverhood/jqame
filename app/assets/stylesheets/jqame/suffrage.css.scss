@@ -30,18 +30,29 @@ div.suffrage {
             @extend %link-textified;
 
             i {
+                @extend %link-color-hover;
+
                 color: $grayLight;
                 cursor: pointer;
                 font-size: 30px;
-
-                &:hover {
-                    color: $linkColorHover;
-                }
             }
 
             i.active {
                 color: $linkColor;
             }
+        }
+    }
+
+    div.answer-accept {
+        font-size: 40px;
+
+        a.accept-answer   { color: $grayLight; }
+        a.unaccept-answer { color: $blue;      }
+
+        a {
+            @extend %link-textified;
+
+            &:hover { color: $linkColorHover; }
         }
     }
 }

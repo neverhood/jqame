@@ -37,6 +37,19 @@
 
   <%- if votable.is_a?(Jqame::Question) %>
     <%= render 'jqame/favorited_questions/toggler' if votable.is_a?(Jqame::Question) %>
-  <%- elsif votable.is_a?(Jqame::Answer) %>
+  <%- elsif votable.is_a?(Jqame::Answer) and current_elector.owns_suffrage?(@question) %>
+
+    <div class='answer-accept'>
+      <%- if votable.accepted? %>
+        <%= link_to jqame.unaccept_answer_path(votable), method: 'post', remote: true, class: 'unaccept-answer' do %>
+          <i class='icon-ok-sign'></i>
+        <% end %>
+      <% else %>
+        <%= link_to jqame.accept_answer_path(votable), method: 'post', remote: true, class: 'accept-answer' do %>
+          <i class='icon-ok-sign'></i>
+        <% end %>
+      <% end %>
+    </div>
+
   <% end %>
 </div>

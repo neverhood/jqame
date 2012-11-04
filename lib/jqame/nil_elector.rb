@@ -6,7 +6,7 @@ class Jqame::NilElector
   end
 
   # suffrage
-  [ :can_vote?, :can_vote_for?, :can_vote_against?, :voted_for?, :voted_against?, :voted? ].each do |method_name|
+  [ :can_vote?, :can_vote_for?, :can_vote_against?, :voted_for?, :voted_against?, :voted?, :owns_suffrage? ].each do |method_name|
     define_method method_name do |votable|
       false
     end

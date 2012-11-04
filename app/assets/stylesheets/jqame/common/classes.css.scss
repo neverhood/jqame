@@ -15,3 +15,10 @@ hr.horizontal-separator {
         text-decoration: none;
     }
 }
+
+
+%link-color-hover {
+    &:hover {
+        color: $linkColorHover;
+    }
+}
