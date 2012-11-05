@@ -53,7 +53,7 @@ module Jqame::SuffrageReputationLogic
 
   # When user downvotes something, some reputation will be withdrawn
   def _downvoted! vote
-    Jqame::ReputationPoint.create(question_id: vote.question_id,
+    vote.reputation_points.create(question_id: vote.question_id,
                                   elector_id: vote.elector_id,
                                   action: Jqame::ReputationPoint::ACTIONS[:downvoted])
   end

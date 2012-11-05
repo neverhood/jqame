@@ -8,7 +8,7 @@ module Suffrage
   def accept! question, answer
     return false if answer.accepted?
 
-    unaccept! question.accepted_answer if question.has_accepted_answer?
+    unaccept!(question, question.accepted_answer) if question.has_accepted_answer?
 
     Jqame::SuffrageReputationLogic.answer_accepted! question, answer
     answer.accept!
