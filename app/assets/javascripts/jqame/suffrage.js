@@ -7,7 +7,7 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
 
             if ( ! $.api.currentElector ) {
                 $('div.suffrage a.upvote, div.suffrage a.downvote, div.suffrage a.cancel-vote').
-                    bind('click', $.api.utils._requestSignIn);
+                    bind('ajax:beforeSend', function() { $.api.utils.requestSignIn(); return false; });
             } else {
                 $('div.suffrage a.upvote, div.suffrage a.downvote').bind('ajax:beforeSend', function() {
                     var voteKind = this.className,
