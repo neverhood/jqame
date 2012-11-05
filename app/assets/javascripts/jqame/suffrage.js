@@ -35,12 +35,20 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
                     var $this = $(this),
                         action = $this.hasClass('accept-answer') ? 'accept' : 'unaccept';
 
-                    $('div.suffrage a.unaccept-answer').toggleClass('unaccept-answer accept-answer').each(function() {
-                        this.href = this.href.replace('unaccept', 'accept');
-                    });
+                    _this._cancelAcceptedAnswer();
 
-                    if ( action == 'accept' )
+                    if ( action == 'accept' ) {
+                        var suffrage = $this.parents('div.suffrage');
+
+                        suffrage.parents('div.answer').addClass('accepted');
                         $this.toggleClass('accept-answer unaccept-answer').attr('href', this.href.replace('accept', 'unaccept'));
+
+                        // User repo
+                        if ( suffrage.data('votable-owner-id') != $.api.currentElector.id ) {
+                            _this._updateElectorReputation( $.api.currentElector.id, $.api.suffrage.rates.actions.accept );
+                            _this._updateElectorReputation( suffrage.data('votable-owner-id'), $.api.suffrage.rates.actions.accepted );
+                        }
+                    }
                 });
             }
 
@@ -50,8 +58,8 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
             actions: { downvoted: -2, accept: 2, accepted: 15 },
 
             votes: {
-                question: { upvote: 5, downvote: 2 },
-                answer:   { upvote: 10, downvote: 2 }
+                question: { upvote: 5,  downvote: -2 },
+                answer:   { upvote: 10, downvote: -2 }
             }
         },
 
@@ -69,15 +77,11 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
             statsContainer.find('a.cancel-vote').removeClass('hidden').attr('data-allowed', 'true');
 
             currentRating.text( currentRatingValue );
-        },
 
-        _changeElectorReputation: function(elector, amount) {
-            var occurences = $('div.elector[data-elector="' + elector + '"]'),
-                reputation = parseInt( occurences.first.find('elector-reputation') ) + amount;
-
-            $.each( occurences, function(index, element) {
-                element.find('elector-reputation').text( amount );
-            });
+            // User repo
+            _this._updateElectorReputation( suffrage.data('votable-owner-id'), $.api.suffrage.rates.votes[suffrage.data('votable-type')][voteKind] );
+            if ( voteKind == 'downvote' )
+                _this._updateElectorReputation( $.api.currentElector.id, $.api.suffrage.rates.actions['downvoted'] );
         },
 
         _cancelVote: function(suffrage, voteKind) {
@@ -89,7 +93,35 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
 
             suffrage.find('a.cancel-vote').addClass('hidden').attr('data-allowed', 'false');
             suffrage.find('a.upvote, a.downvote').attr('data-allowed', 'true').find('i').removeClass('active');
+
+            // User repo
+            _this._updateElectorReputation( suffrage.data('votable-owner-id'), -$.api.suffrage.rates.votes[suffrage.data('votable-type')][voteKind] );
+            if ( voteKind == 'downvote' )
+                _this._updateElectorReputation( $.api.currentElector.id, -$.api.suffrage.rates.actions['downvoted'] );
         },
+
+        _cancelAcceptedAnswer: function() {
+            var acceptedAnswer = $('div.answer.accepted').removeClass('accepted');
+
+            if ( acceptedAnswer.length === 0 ) return false;
+
+            var suffrage = acceptedAnswer.find('div.suffrage');
+            $('a.unaccept-answer', suffrage).toggleClass('unaccept-answer accept-answer').each(function() {
+                this.href = this.href.replace('unaccept', 'accept');
+            });
+
+            if ( suffrage.data('votable-owner-id') == $.api.currentElector.id ) return false;
+
+            _this._updateElectorReputation( $.api.currentElector.id, -$.api.suffrage.rates.actions.accept );
+            _this._updateElectorReputation( suffrage.data('votable-owner-id'), -$.api.suffrage.rates.actions.accepted );
+        },
+
+        _updateElectorReputation: function(electorId, reputationAmount) {
+            var occurrences = $('div.elector[data-elector-id="' + electorId + '"]'),
+                currentRepo = parseInt( occurrences.first().find('div.elector-reputation').text() );
+
+            occurrences.find('div.elector-reputation').text( currentRepo + reputationAmount );
+        }
 
     };
 

@@ -1,4 +1,4 @@
-<div class='answer' data-votable-id='<%= answer.id %>'>
+<div class='answer <%= answer.accepted ? "accepted" : "" %>' data-votable-id='<%= answer.id %>'>
   <%= render 'suffrage', votable: answer %>
 
   <div class='contents'>
