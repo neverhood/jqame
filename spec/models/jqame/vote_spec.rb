@@ -118,6 +118,18 @@ describe Jqame::Vote do
       elector_b.vote_against! @question
       author.reload.reputation.should == ( vote_rates[:question][:downvote] * 2 )
     end
+
+    it 'withdraws reputation upon downvote' do
+      vote = @elector.vote_against! @question
+
+      @elector.reload.reputation.should == Jqame::ActionRate.new(:downvoted).rate
+      @question.elector.reload.reputation.should == Jqame::VoteRate.new(vote).rate
+
+      vote = @elector.vote_for!(@question)
+
+      @elector.reload.reputation.should be_zero
+      @question.elector.reload.reputation.should == Jqame::VoteRate.new(vote).rate
+    end
   end
 
 end
