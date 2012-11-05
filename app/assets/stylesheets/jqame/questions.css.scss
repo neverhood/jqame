@@ -17,6 +17,10 @@ body#jqame-questions {
             @extend .well;
             margin-bottom: 10px;
         }
+
+        div.elector {
+            @extend .pull-right;
+        }
     }
 
     div#comment-form-container {

@@ -29,4 +29,8 @@ $.ajaxSettings.dataType = 'json';
 (function($, undefined) {
     $.api.controller = document.body.id;
     $.api.action = document.body.attributes['data-action'].value;
+
+    if ( $('div#current-user-info').length ) {
+        $.api.currentUser = $.parseJSON( $('div#current-user-info').remove().text() );
+    }
 })(jQuery);

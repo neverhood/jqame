@@ -4,6 +4,12 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
 
     var _this = $.api.suffrage = {
         init: function() {
+
+            if (! $.api.currentElector === null ) {
+                $('div.suffrage a.upvote, div.suffrage a.downvote, div.suffrage a.cancel-vote').
+                    bind('click', $.api.utils._requestSignIn);
+            }
+
             $('div.suffrage a.upvote, div.suffrage a.downvote').bind('ajax:beforeSend', function() {
                 var voteKind = this.className,
                     $this    = $(this),
@@ -33,6 +39,15 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
             });
         },
 
+        rates: {
+            actions: { downvoted: -2, accept: 2, accepted: 15 },
+
+            votes: {
+                question: { upvote: 5, downvote: 2 },
+                answer:   { upvote: 10, downvote: 2 }
+            }
+        },
+
         vote: function(suffrage, voteKind) {
             var invertVote = voteKind == 'upvote' ? 'downvote' : 'upvote';
 
@@ -53,6 +68,15 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
         },
 
         unaccept: function(suffrage) {
+        },
+
+        _changeElectorReputation: function(elector, amount) {
+            var occurences = $('div.elector[data-elector="' + elector + '"]'),
+                reputation = parseInt( occurences.first.find('elector-reputation') ) + amount;
+
+            $.each( occurences, function(index, element) {
+                element.find('elector-reputation').text( amount );
+            });
         },
 
         _cancelVote: function(suffrage, voteKind) {
