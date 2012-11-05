@@ -18,5 +18,8 @@ div.answer {
         margin-bottom: 10px;
     }
 
+    div.elector {
+        @extend .pull-right;
+    }
 
 }

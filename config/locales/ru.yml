@@ -11,6 +11,9 @@ ru:
         brand: 'Jqame'
         questions: 'Вопросы'
         ask_question: 'Задать вопрос'
+      templates:
+        request_sign_in: '<strong> Внимание! </strong> Для совершения этого действия Вам необходимо войти на сайт или зарегестрироваться'
+        cant_vote_for_own_votable: '<strong> Нельзя голосовать за собственный пост </strong>'
       suffrage:
         upvote: 'За'
         downvote: 'Против'

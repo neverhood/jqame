@@ -20,6 +20,20 @@
 //= require jqame/answers
 //= require jqame/comments
 //
+//= require bootstrap-transition
+//  require bootstrap-affix
+//= require bootstrap-alert
+//  require bootstrap-button
+//  require bootstrap-carousel
+//  require bootstrap-collapse
+//  require bootstrap-dropdown
+//  require bootstrap-modal
+//  require bootstrap-scrollspy
+//  require bootstrap-tab
+//  require bootstrap-tooltip
+//  require bootstrap-popover
+//  require bootstrap-typeahead
+//
 
 
 'use strict';
@@ -31,6 +45,6 @@ $.ajaxSettings.dataType = 'json';
     $.api.action = document.body.attributes['data-action'].value;
 
     if ( $('div#current-user-info').length ) {
-        $.api.currentUser = $.parseJSON( $('div#current-user-info').remove().text() );
+        $.api.currentElector = $.parseJSON( $('div#current-user-info').remove().text() );
     }
 })(jQuery);

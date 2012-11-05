@@ -17,8 +17,14 @@
     </ul>
   <% end %>
 
-  <div class="pull-right">
-    <%= answer.elector.email %>
+  <div class='elector' data-elector-id='<%= answer.elector_id %>'>
+    <div class='elector-email'>
+      <%= answer.elector.email %>
+    </div>
+
+    <div class='elector-reputation'>
+      <%= answer.elector.reputation %>
+    </div>
   </div>
 
   <div id='comments'> <%= render @question.comments %> </div>

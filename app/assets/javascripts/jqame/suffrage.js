@@ -5,38 +5,45 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
     var _this = $.api.suffrage = {
         init: function() {
 
-            if (! $.api.currentElector === null ) {
+            if ( ! $.api.currentElector ) {
                 $('div.suffrage a.upvote, div.suffrage a.downvote, div.suffrage a.cancel-vote').
                     bind('click', $.api.utils._requestSignIn);
+            } else {
+                $('div.suffrage a.upvote, div.suffrage a.downvote').bind('ajax:beforeSend', function() {
+                    var voteKind = this.className,
+                        $this    = $(this),
+                        suffrage = $this.parents('div.suffrage');
+
+                    if ( suffrage.data('votable-owner-id') == $.api.currentElector.id )
+                        $.api.utils.cantVoteForOwnVotable();
+
+                    if ( $this.attr('data-allowed') === 'false' ) return false;
+
+                    _this.vote( suffrage, voteKind );
+                });
+
+                $('div.suffrage a.cancel-vote').bind('ajax:beforeSend', function() {
+                    var $this      = $(this).addClass('hidden'),
+                        suffrage = $this.parents('div.suffrage');
+
+                    if ( $this.attr('data-allowed') === 'false' ) return false;
+
+                    _this._cancelVote(suffrage, suffrage.find('i.active').parent().attr('class'));
+                });
+
+                $('div.suffrage a.accept-answer, div.suffrage a.unaccept-answer').bind('ajax:beforeSend', function() {
+                    var $this = $(this),
+                        action = $this.hasClass('accept-answer') ? 'accept' : 'unaccept';
+
+                    $('div.suffrage a.unaccept-answer').toggleClass('unaccept-answer accept-answer').each(function() {
+                        this.href = this.href.replace('unaccept', 'accept');
+                    });
+
+                    if ( action == 'accept' )
+                        $this.toggleClass('accept-answer unaccept-answer').attr('href', this.href.replace('accept', 'unaccept'));
+                });
             }
 
-            $('div.suffrage a.upvote, div.suffrage a.downvote').bind('ajax:beforeSend', function() {
-                var voteKind = this.className,
-                    $this    = $(this),
-                    suffrage = $this.parents('div.suffrage');
-
-                if ( $this.attr('data-allowed') === 'false' ) return false;
-
-                _this.vote( suffrage, voteKind );
-            });
-
-            $('div.suffrage a.cancel-vote').bind('ajax:beforeSend', function() {
-                var $this      = $(this).addClass('hidden'),
-                    suffrage = $this.parents('div.suffrage');
-
-                if ( $this.attr('data-allowed') === 'false' ) return false;
-
-                _this._cancelVote(suffrage, suffrage.find('i.active').parent().attr('class'));
-            });
-
-            $('div.suffrage a.accept-answer, div.suffrage a.unaccept-answer').bind('ajax:beforeSend', function() {
-                var $this = $(this),
-                    action = $this.hasClass('accept-answer') ? 'accept' : 'unaccept',
-                    invertAction = action == 'accept' ? 'unaccept' : 'accept';
-
-                $this.toggleClass('accept-answer unaccept-answer').
-                    attr('href', this.href.replace(action, invertAction));
-            });
         },
 
         rates: {
@@ -62,12 +69,6 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
             statsContainer.find('a.cancel-vote').removeClass('hidden').attr('data-allowed', 'true');
 
             currentRating.text( currentRatingValue );
-        },
-
-        accept: function(suffrage) {
-        },
-
-        unaccept: function(suffrage) {
         },
 
         _changeElectorReputation: function(elector, amount) {

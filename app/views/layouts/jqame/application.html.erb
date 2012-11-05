@@ -17,8 +17,10 @@
     <%= render 'footer' %>
 
     <%- if elector_signed_in? %>
-      <div id='current-user-info'> <%= current_elector.to_json(only: [ :email, :reputation ]) %> </div>
+      <div id='current-user-info'> <%= current_elector.to_json(only: [ :id, :email, :reputation ]) %> </div>
     <% end %>
+
+    <%= render 'templates' %>
 
     <%= javascript_include_tag "jqame/application" %>
   </body>

@@ -107,6 +107,21 @@ html, body {
     }
 }
 
+// Templates //
+div#please-sign-in, div#cant-vote-for-own-votable {
+    display: none;
+}
+
+div#please-sign-in, div#cant-vote-for-own-votable {
+    position: fixed;
+
+    padding:    25px 35px;
+    width:      300px;
+    left:       900px;
+    top:        50px;
+}
+// Templates END //
+
 // APPLICATION CSS END //
 
 @import "bootstrap-responsive";
