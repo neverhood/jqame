@@ -22,6 +22,15 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
 
                 _this._cancelVote(suffrage, suffrage.find('i.active').parent().attr('class'));
             });
+
+            $('div.suffrage a.accept-answer, div.suffrage a.unaccept-answer').bind('ajax:beforeSend', function() {
+                var $this = $(this),
+                    action = $this.hasClass('accept-answer') ? 'accept' : 'unaccept',
+                    invertAction = action == 'accept' ? 'unaccept' : 'accept';
+
+                $this.toggleClass('accept-answer unaccept-answer').
+                    attr('href', this.href.replace(action, invertAction));
+            });
         },
 
         vote: function(suffrage, voteKind) {
@@ -40,6 +49,12 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
             currentRating.text( currentRatingValue );
         },
 
+        accept: function(suffrage) {
+        },
+
+        unaccept: function(suffrage) {
+        },
+
         _cancelVote: function(suffrage, voteKind) {
             var statsController = suffrage.find('div.stats'),
                 currentRating   = suffrage.find('span.current-rating-value'),
@@ -49,7 +64,8 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
 
             suffrage.find('a.cancel-vote').addClass('hidden').attr('data-allowed', 'false');
             suffrage.find('a.upvote, a.downvote').attr('data-allowed', 'true').find('i').removeClass('active');
-        }
+        },
+
     };
 
 }
