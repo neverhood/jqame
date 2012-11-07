@@ -99,7 +99,7 @@ module Suffrage
   end
 
   def favorited_question_entry(question)
-    Jqame::FavoritedQuestion.where(question_id: question.id).first
+    Jqame::FavoritedQuestion.where(elector_id: id, question_id: question.id).first
   end
 
   def owns_suffrage? suffrage

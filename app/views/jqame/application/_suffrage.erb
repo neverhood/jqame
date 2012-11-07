@@ -36,7 +36,7 @@
   <hr />
 
   <%- if votable.is_a?(Jqame::Question) %>
-    <%= render 'jqame/favorited_questions/toggler' if votable.is_a?(Jqame::Question) %>
+    <%= render 'jqame/favorited_questions/toggler' %>
   <%- elsif votable.is_a?(Jqame::Answer) and current_elector.owns_suffrage?(@question) %>
 
     <div class='answer-accept'>

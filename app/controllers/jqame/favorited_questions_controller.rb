@@ -7,6 +7,7 @@ module Jqame
 
     before_filter :authenticate_elector!
     before_filter :find_favorited_question!, only: [ :destroy ]
+    before_filter :require_favorited_question_owner!, only: [ :destroy ]
     before_filter :find_question!, only: [ :create ]
 
     def create
