@@ -2,9 +2,9 @@
 
 if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions' ) {
 
-    var _this = $.api.suffrage = {
-        init: function() {
+    $.api.suffrage = {
 
+        init: function() {
             if ( ! $.api.currentElector ) {
                 $('div.suffrage a.upvote, div.suffrage a.downvote, div.suffrage a.cancel-vote').
                     bind('ajax:beforeSend', function() { $.api.utils.requestSignIn(); return false; });
@@ -19,7 +19,7 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
 
                     if ( $this.attr('data-allowed') === 'false' ) return false;
 
-                    _this.vote( suffrage, voteKind );
+                    $.api.suffrage.vote( suffrage, voteKind );
                 });
 
                 $('div.suffrage a.cancel-vote').bind('ajax:beforeSend', function() {
@@ -28,14 +28,14 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
 
                     if ( $this.attr('data-allowed') === 'false' ) return false;
 
-                    _this._cancelVote(suffrage, suffrage.find('i.active').parent().attr('class'));
+                    $.api.suffrage._cancelVote(suffrage, suffrage.find('i.active').parent().attr('class'));
                 });
 
                 $('div.suffrage a.accept-answer, div.suffrage a.unaccept-answer').bind('ajax:beforeSend', function() {
                     var $this = $(this),
                         action = $this.hasClass('accept-answer') ? 'accept' : 'unaccept';
 
-                    _this._cancelAcceptedAnswer();
+                    $.api.suffrage._cancelAcceptedAnswer();
 
                     if ( action == 'accept' ) {
                         var suffrage = $this.parents('div.suffrage');
@@ -45,8 +45,8 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
 
                         // User repo
                         if ( suffrage.data('votable-owner-id') != $.api.currentElector.id ) {
-                            _this._updateElectorReputation( $.api.currentElector.id, $.api.suffrage.rates.actions.accept );
-                            _this._updateElectorReputation( suffrage.data('votable-owner-id'), $.api.suffrage.rates.actions.accepted );
+                            $.api.suffrage._updateElectorReputation( $.api.currentElector.id, $.api.suffrage.rates.actions.accept );
+                            $.api.suffrage._updateElectorReputation( suffrage.data('votable-owner-id'), $.api.suffrage.rates.actions.accepted );
                         }
                     }
                 });
@@ -66,7 +66,7 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
         vote: function(suffrage, voteKind) {
             var invertVote = voteKind == 'upvote' ? 'downvote' : 'upvote';
 
-            if ( suffrage.find('a.' + invertVote + ' i.active').length ) _this._cancelVote(suffrage, invertVote);
+            if ( suffrage.find('a.' + invertVote + ' i.active').length ) $.api.suffrage._cancelVote(suffrage, invertVote);
 
             var statsContainer = suffrage.find('div.stats'),
                 currentRating  = suffrage.find('span.current-rating-value'),
@@ -79,9 +79,9 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
             currentRating.text( currentRatingValue );
 
             // User repo
-            _this._updateElectorReputation( suffrage.data('votable-owner-id'), $.api.suffrage.rates.votes[suffrage.data('votable-type')][voteKind] );
+            $.api.suffrage._updateElectorReputation( suffrage.data('votable-owner-id'), $.api.suffrage.rates.votes[suffrage.data('votable-type')][voteKind] );
             if ( voteKind == 'downvote' )
-                _this._updateElectorReputation( $.api.currentElector.id, $.api.suffrage.rates.actions['downvoted'] );
+                $.api.suffrage._updateElectorReputation( $.api.currentElector.id, $.api.suffrage.rates.actions['downvoted'] );
         },
 
         _cancelVote: function(suffrage, voteKind) {
@@ -95,9 +95,9 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
             suffrage.find('a.upvote, a.downvote').attr('data-allowed', 'true').find('i').removeClass('active');
 
             // User repo
-            _this._updateElectorReputation( suffrage.data('votable-owner-id'), -$.api.suffrage.rates.votes[suffrage.data('votable-type')][voteKind] );
+            $.api.suffrage._updateElectorReputation( suffrage.data('votable-owner-id'), -$.api.suffrage.rates.votes[suffrage.data('votable-type')][voteKind] );
             if ( voteKind == 'downvote' )
-                _this._updateElectorReputation( $.api.currentElector.id, -$.api.suffrage.rates.actions['downvoted'] );
+                $.api.suffrage._updateElectorReputation( $.api.currentElector.id, -$.api.suffrage.rates.actions['downvoted'] );
         },
 
         _cancelAcceptedAnswer: function() {
@@ -112,8 +112,8 @@ if ( document.body.id == 'jqame-answers' || document.body.id == 'jqame-questions
 
             if ( suffrage.data('votable-owner-id') == $.api.currentElector.id ) return false;
 
-            _this._updateElectorReputation( $.api.currentElector.id, -$.api.suffrage.rates.actions.accept );
-            _this._updateElectorReputation( suffrage.data('votable-owner-id'), -$.api.suffrage.rates.actions.accepted );
+            $.api.suffrage._updateElectorReputation( $.api.currentElector.id, -$.api.suffrage.rates.actions.accept );
+            $.api.suffrage._updateElectorReputation( suffrage.data('votable-owner-id'), -$.api.suffrage.rates.actions.accepted );
         },
 
         _updateElectorReputation: function(electorId, reputationAmount) {

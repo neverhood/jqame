@@ -1,7 +1,3 @@
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-//
-
 'use strict';
 
 if ( document.body.id == 'jqame-questions' ) {
@@ -16,6 +12,7 @@ if ( document.body.id == 'jqame-questions' ) {
 
         if ( $.api.action == 'show' ) {
             $.api.suffrage.init(); // Voting
+            $.api.favoritedQuestions.init(); // Favorites
             $.api.answers.questionShow.init(); // Answers related
             $.api.comments.questionShow.init(); // Comments related
         }

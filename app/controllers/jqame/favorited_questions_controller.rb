@@ -7,7 +7,6 @@ module Jqame
 
     before_filter :authenticate_elector!
     before_filter :find_favorited_question!, only: [ :destroy ]
-    before_filter :require_favorited_question_owner!, only: [ :destroy ]
     before_filter :find_question!, only: [ :create ]
 
     def create
@@ -29,11 +28,8 @@ module Jqame
     private
 
     def find_favorited_question!
-      @favorited_question = Jqame::FavoritedQuestion.where(id: params.require(:id)).first
-    end
-
-    def require_favorited_question_owner!
-      render_permission_denied unless @favorited_question.elector_id == current_elector.id
+      @favorited_question = current_elector.favorited_questions.where(question_id: params.require(:question_id)).first
+      render_not_found if @favorited_question.nil?
     end
 
   end

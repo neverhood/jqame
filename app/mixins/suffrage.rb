@@ -98,10 +98,6 @@ module Suffrage
     favorited_questions.where(question_id: question.id).any?
   end
 
-  def favorited_question_entry(question)
-    Jqame::FavoritedQuestion.where(elector_id: id, question_id: question.id).first
-  end
-
   def owns_suffrage? suffrage
     return false unless [ Jqame::Answer, Jqame::Comment, Jqame::Question ].include?(suffrage.class)
     suffrage.elector_id == id

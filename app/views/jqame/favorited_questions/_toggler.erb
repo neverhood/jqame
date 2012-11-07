@@ -1,12 +1,12 @@
-<div class='toggle-favorited'>
+<div id='toggle-favorited'>
 
   <div class='toggler-container'>
     <%- if current_elector.favorited?(@question) %>
-      <%= link_to jqame.favorited_question_path(current_elector.favorited_question_entry(@question)), method: 'delete', class: 'remove-from-favorites' do %>
+      <%= link_to jqame.favorited_questions_path(question_id: @question.id), method: 'delete', remote: true, class: 'remove-from-favorites' do %>
         <i class='icon-star'></i>
       <% end %>
     <% else %>
-      <%= link_to jqame.favorited_questions_path(question_id: @question.id), method: 'post', class: 'add-to-favorites' do %>
+      <%= link_to jqame.favorited_questions_path(question_id: @question.id), method: 'post', remote: true, class: 'add-to-favorites' do %>
         <i class='icon-star-empty'></i>
       <% end %>
     <% end %>

@@ -19,6 +19,7 @@
 //= require jqame/suffrage
 //= require jqame/answers
 //= require jqame/comments
+//= require jqame/favorited_questions
 //
 //= require bootstrap-transition
 //  require bootstrap-affix
