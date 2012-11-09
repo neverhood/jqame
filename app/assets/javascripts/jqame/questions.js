@@ -3,7 +3,36 @@
 if ( document.body.id == 'jqame-questions' ) {
 
     $.api.questions = {
+        page: 1,
+        indexUrl: '/jqame/questions',
         init: function() {
+            this._bindEndlessPagination();
+        },
+
+        _bindEndlessPagination: function() {
+            var $window = $(window),
+                $document = $(document);
+
+            $window.scroll(function () {
+                if ( $.api.loading ) return false;
+
+                if ($window.scrollTop() >= $document.height() - $window.height() - 100) {
+                    var questionsContainer = $('div#questions'),
+                        page = parseInt( questionsContainer.attr('data-page') ) + 1;
+
+                    if ( questionsContainer.attr('data-last-page') === 'true' ) return false;
+
+                    $.api.loading = true;
+                    $.getJSON( $.api.questions.indexUrl + '?page=' + page, function(data) {
+                        questionsContainer.append( data.questions ).
+                            attr('data-page', page);
+
+                        if ( data.last_page ) questionsContainer.attr('data-last-page', true);
+
+                        $.api.loading = false;
+                    });
+                }
+            });
         }
     };
 

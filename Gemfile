@@ -10,6 +10,7 @@ gem "jquery-rails"
 gem "devise"
 gem "pry-rails"
 gem "russian"
+gem "kaminari"
 
 gem "strong_parameters"
 gem "simple_form"

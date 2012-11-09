@@ -10,7 +10,16 @@ module Jqame
     before_filter :require_question_owner!, only: [ :update, :edit, :destroy ]
 
     def index
-      @questions = Question.all
+      @questions = Question.page( params[:page] )
+
+      respond_to do |format|
+        format.html
+        format.json do
+          render json: { questions: render_to_string(partial: 'question', collection: @questions),
+                         last_page: @questions.last_page?
+          }
+        end
+      end
     end
 
     def show
