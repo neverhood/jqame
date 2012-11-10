@@ -9,6 +9,9 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+
+ *= require jqame/wmd
+ *= require jqame/prettify
  */
 
 @import "bootstrap/variables"; // Modify this for custom colors, font-sizes, etc

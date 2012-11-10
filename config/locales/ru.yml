@@ -25,6 +25,7 @@ ru:
     questions:
       form:
         submit: 'Сохранить'
+        preview: 'Предворительный просмотр'
       index:
         header: 'Вопросы'
       show:
@@ -44,8 +45,10 @@ ru:
         destroy: 'Удалить'
       form_create:
         header: 'Новый ответ'
+        preview: 'Предворительный просмотр'
       form_edit:
         header: 'Редактировать ответ'
+        preview: 'Предворительный просмотр'
       edit:
         header: 'Редактировать ответ'
 

@@ -1,3 +1,8 @@
+//= require jqame/wmd
+//= require jqame/showdown
+//= require jqame/prettify
+//
+
 'use strict';
 
 if ( document.body.id == 'jqame-questions' ) {
@@ -6,7 +11,8 @@ if ( document.body.id == 'jqame-questions' ) {
         page: 1,
         indexUrl: '/jqame/questions',
         init: function() {
-            this._bindEndlessPagination();
+            if ( $.api.action == 'index' ) this._bindEndlessPagination();
+            if ( $.api.action == 'new' || $.api.action == 'edit' ) this._bindWmd();
         },
 
         _bindEndlessPagination: function() {
@@ -33,6 +39,18 @@ if ( document.body.id == 'jqame-questions' ) {
                     });
                 }
             });
+        },
+
+        _bindWmd: function() {
+            new WMDEditor({
+                input: 'question_body',
+                button_bar: 'question-buttons',
+                preview: 'question-preview',
+                helpLink: ''
+            });
+
+            $('pre').addClass('prettyprint');
+            prettyPrint();
         }
     };
 

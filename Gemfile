@@ -11,6 +11,7 @@ gem "devise"
 gem "pry-rails"
 gem "russian"
 gem "kaminari"
+gem "redcarpet"
 
 gem "strong_parameters"
 gem "simple_form"

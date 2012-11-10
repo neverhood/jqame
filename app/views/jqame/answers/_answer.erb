@@ -2,7 +2,7 @@
   <%= render 'suffrage', votable: answer %>
 
   <div class='contents'>
-    <div class='body'> <%= answer.body %> </div>
+    <div class='body'> <%= mdown answer.body %> </div>
   </div>
 
   <%- if elector_signed_in? and current_elector.owns_suffrage?(answer) %>

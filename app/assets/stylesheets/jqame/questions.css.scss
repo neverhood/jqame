@@ -1,5 +1,17 @@
 body#jqame-questions {
 
+    /* New */
+
+    div#question-form-container {
+        div#question-buttons {
+            margin-left: 150px;
+        }
+
+        div#question-preview {
+            @extend .well;
+        }
+    }
+
     /* Show */
     div.question {
         div.contents, div.comments {

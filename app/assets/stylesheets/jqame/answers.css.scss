@@ -22,4 +22,18 @@ div.answer {
         @extend .pull-right;
     }
 
+
 }
+
+/* Edit */
+
+div#edit-answer-form-container, div#new-answer-form-container {
+    div#answer-buttons {
+        margin-left: 150px;
+    }
+
+    div#answer-preview {
+        @extend .well;
+    }
+}
+

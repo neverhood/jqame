@@ -1,6 +1,10 @@
 module Jqame
   module ApplicationHelper
 
+    def mdown(text)
+      Markdown.render(text).html_safe
+    end
+
     def error_messages_for model
       return "" if model.errors.empty?
 

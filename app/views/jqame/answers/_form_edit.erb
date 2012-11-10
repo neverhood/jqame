@@ -2,7 +2,12 @@
   <legend> <%= t '.header' %> </legend>
 
   <%= simple_form_for @answer, html: { id: 'edit-answer', class: 'form form-horizontal' } do |form| %>
-    <%= form.input :body, input_html: { class: 'span6', rows: 7 } %>
+
+    <div id='answer-buttons'></div>
+    <%= form.input :body, input_html: { class: 'span8', rows: 10 } %>
+
+    <h3> <%= t '.preview' %> </h3>
+    <div id='answer-preview'> </div>
 
     <%= form.submit t('jqame.common.submit'), disable_with: t('jqame.common.please_wait') %>
   <% end %>
