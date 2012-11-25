@@ -13,7 +13,8 @@ if ( document.body.id == 'jqame-questions' ) {
                     action = $this.hasClass('add-to-favorites') ? 'add' : 'remove',
                     container = $(this).parents('div#toggle-favorited'),
                     currentCount = container.find('div.times-favorited'),
-                    newCount = parseInt( currentCount.text() ) + ( action == 'add' ? 1 : -1 );
+                    newCount = parseInt( currentCount.text() ) + ( action == 'add' ? 1 : -1 ),
+                    requestType = $this.attr('data-method');
 
                 currentCount.text( newCount );
                 $this.attr('data-method', ( action == 'add' ? 'delete' : 'post' ));
@@ -21,8 +22,14 @@ if ( document.body.id == 'jqame-questions' ) {
                     find('i').toggleClass('icon-star icon-star-empty');
 
                 $.api.loading = true;
-            })
-            .bind('ajax:complete', function() { $.api.loading = false; });
+                $.ajax({
+                    type: requestType,
+                    url:  this.href,
+                    complete: function() { $.api.loading = false }
+                });
+
+                return false;
+            });
         }
 
     }

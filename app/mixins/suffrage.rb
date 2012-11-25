@@ -90,11 +90,11 @@ module Suffrage
   end
 
   def add_to_favorites! question
-    return nil if favorited?(question)
+    return nil if favorited_question?(question)
     favorited_questions.new(question_id: question.id).tap { |favorite| favorite.save }
   end
 
-  def favorited? question
+  def favorited_question? question
     favorited_questions.where(question_id: question.id).any?
   end
 

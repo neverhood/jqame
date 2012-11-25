@@ -13,7 +13,7 @@ class Jqame::NilElector
   end
 
   #favorites
-  [ :favorited? ].each do |method_name|
+  [ :favorited_question? ].each do |method_name|
     define_method method_name do |question|
       false
     end

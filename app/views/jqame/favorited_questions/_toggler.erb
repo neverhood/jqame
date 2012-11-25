@@ -1,7 +1,7 @@
 <div id='toggle-favorited'>
 
   <div class='toggler-container'>
-    <%- if current_elector.favorited?(@question) %>
+    <%- if current_elector.favorited_question?(@question) %>
       <%= link_to jqame.favorited_questions_path(question_id: @question.id), method: 'delete', remote: true, class: 'remove-from-favorites' do %>
         <i class='icon-star'></i>
       <% end %>
