@@ -12,7 +12,8 @@
       </li>
 
       <li> <i class='icon-trash'></i>
-      <%= link_to t('.destroy'), jqame.answer_path(answer), method: 'delete', data: { confirm: t('jqame.common.are_you_sure?') } %>
+      <%= link_to t('.destroy'), jqame.answer_path(answer), method: 'delete', remote: true, class: 'destroy-answer',
+        data: { confirm: t('jqame.common.are_you_sure?') } %>
       </li>
     </ul>
   <% end %>

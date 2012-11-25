@@ -15,7 +15,6 @@
  */
 
 @import "bootstrap/variables"; // Modify this for custom colors, font-sizes, etc
-
 @import "bootstrap/mixins";
 // CSS Reset
 @import "bootstrap/reset";
@@ -69,8 +68,8 @@
 // APPLICATION CSS //
 @import "font-awesome";
 
-@import "jqame/common/classes";
 @import "jqame/common/variables";
+@import "jqame/common/classes";
 @import "jqame/common/mixins";
 
 @import "jqame/questions";

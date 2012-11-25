@@ -19,10 +19,10 @@ module Jqame
 
     paginates_per 50
 
-    default_scope -> { order("'jqame_questions'.'created_at' DESC") }
+    default_scope -> { order("jqame_questions.created_at DESC") }
 
-    scope :top, -> count = 5 { limit(count).order("'jqame_questions'.'current_rating' DESC") }
-    scope :recent, -> count = 25 { limit(count).order("'jqame_questions'.'created_at' DESC") }
+    scope :top, -> count = 5 { limit(count).order("jqame_questions.current_rating DESC") }
+    scope :recent, -> count = 25 { limit(count).order("jqame_questions.created_at DESC") }
 
     # builds and attempts to save an answer
     def answer_with elector, options
